@@ -1,0 +1,2 @@
+include 'DTNFoundation', 'DTNApp'
+project(':DTNFoundation').projectDir = new File('../android-dtn-foundation')
