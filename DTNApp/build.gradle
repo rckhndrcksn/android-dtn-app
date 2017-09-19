@@ -33,19 +33,19 @@ android {
         testApplicationId "com.heb.dtn.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        signingConfigs {
-            debug {
-                storeFile file("../keystore/debug.keystore")
-            }
-            signingConfigs {
-                release {
-                    storeFile file("TODO")
-                    storePassword "TODO"
-                    keyAlias "TODO"
-                    keyPassword "TODO"
-                }
-            }
-        }
+//        signingConfigs {
+//            debug {
+//                storeFile file("../keystore/debug.keystore")
+//            }
+//            signingConfigs {
+//                release {
+//                    storeFile file("TODO")
+//                    storePassword "TODO"
+//                    keyAlias "TODO"
+//                    keyPassword "TODO"
+//                }
+//            }
+//        }
     }
 
     buildTypes {
