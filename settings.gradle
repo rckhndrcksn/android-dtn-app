@@ -1,2 +1,3 @@
-include 'DTNFoundation', 'DTNApp'
-project(':DTNFoundation').projectDir = new File('../android-dtn-foundation')
+include ':DinnerTonightService'
+include 'DinnerTonightFoundation', 'DinnerTonight'
+project(':DinnerTonightFoundation').projectDir = new File('../android-dtn-foundation')

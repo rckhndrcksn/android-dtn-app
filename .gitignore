@@ -23,7 +23,7 @@ proguard/
 build/
 /captures
 .externalNativeBuild
-HEBPharmacy/src/main/res/values/strings.xml
+DinnerTonight/src/main/res/values/strings.xml
 
 # IntelliJ IDEA
 .idea
