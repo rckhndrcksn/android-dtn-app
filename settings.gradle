@@ -1,3 +1,2 @@
-include ':DinnerTonightService'
-include 'DinnerTonightFoundation', 'DinnerTonight'
+include 'DinnerTonightFoundation', 'DinnerTonightService', 'DinnerTonight'
 project(':DinnerTonightFoundation').projectDir = new File('../android-dtn-foundation')

@@ -1,23 +1,38 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion project.property("androidCompiledSdkVersion").toInteger()
+    buildToolsVersion project.property("selectedBuildToolsVersion")
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-
+        minSdkVersion project.property("androidMinSdkVersion").toInteger()
+        targetSdkVersion project.property("androidTargetSdkVersion").toInteger()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
+
     buildTypes {
+        debug {
+            debuggable true
+            multiDexEnabled true
+        }
         release {
             minifyEnabled false
+            debuggable true
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.7
+        targetCompatibility 1.7
+    }
+
+    dexOptions {
+        maxProcessCount 4
+        javaMaxHeapSize "5g"
     }
 }
 
@@ -26,6 +41,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
+    compile project(':DinnerTonightFoundation')
 }
