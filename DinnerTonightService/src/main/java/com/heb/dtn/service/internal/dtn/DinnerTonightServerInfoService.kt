@@ -4,6 +4,8 @@ import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.foundation.service.HTTPService
 import com.heb.dtn.foundation.service.get
 import com.heb.dtn.service.api.ServerInfoService
+import com.heb.dtn.service.domain.ServerStatus
+import com.heb.dtn.service.domain.isUp
 import com.inmotionsoftware.promise.Promise
 
 //
@@ -12,9 +14,12 @@ import com.inmotionsoftware.promise.Promise
 
 internal class DinnerTonightServerInfoService(config: HTTPService.Config) : HTTPService(config = config), ServerInfoService {
 
-    override fun isServerHealthy(): Promise<Boolean> {
+    override fun serverStatus(): Promise<ServerStatus> {
         val route = "api/v1/health"
-        return this.get(route = route).then { true }
+        return this.get(route = route, type = ServerStatus::class.java)
     }
+
+    override fun isServerHealthy(): Promise<Boolean>
+        = this.serverStatus().then { it.isUp()  }
 
 }
