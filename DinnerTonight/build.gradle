@@ -97,6 +97,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile project(':DinnerTonightFoundation')
     compile project(':DinnerTonightService')
+    compile project(':IMSFlow')
 }
 
 repositories {

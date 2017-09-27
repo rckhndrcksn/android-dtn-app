@@ -1,2 +1,3 @@
-include 'DinnerTonightFoundation', 'DinnerTonightService', 'DinnerTonight'
-project(':DinnerTonightFoundation').projectDir = new File('../android-dtn-foundation')
+include 'IMSFlow', 'DinnerTonightFoundation', 'DinnerTonightService', 'DinnerTonight'
+project(':DinnerTonightFoundation').projectDir = new File('../android-dtn-foundation/DinnerTonightFoundation')
+project(':IMSFlow').projectDir = new File('../android-dtn-foundation/IMSFlow')
