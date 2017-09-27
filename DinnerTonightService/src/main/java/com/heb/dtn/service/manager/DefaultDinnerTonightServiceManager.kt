@@ -4,20 +4,23 @@ import android.content.Context
 import com.heb.dtn.foundation.service.Decoder
 import com.heb.dtn.foundation.service.HTTPService
 import com.heb.dtn.foundation.service.JSONDecoder
-import com.heb.dtn.service.BuildConfig
-import com.heb.dtn.service.api.ProductsService
+import com.heb.dtn.service.api.ProductService
 import com.heb.dtn.service.api.ServerInfoService
 import com.heb.dtn.service.api.StoreService
-import com.heb.dtn.service.internal.dtn.DinnerTonightProductsService
+import com.heb.dtn.service.domain.account.OAuthToken
+import com.heb.dtn.service.internal.dtn.DinnerTonightProductService
 import com.heb.dtn.service.internal.dtn.DinnerTonightServerInfoService
 import com.heb.dtn.service.internal.dtn.DinnerTonightStoreService
+import com.heb.dtn.service.internal.dtn.mock.MockDinnerTonightProductService
+import com.heb.dtn.service.internal.dtn.mock.MockDinnerTonightStoreService
 
 //
 // Created by Khuong Huynh on 9/22/17.
 //
 
-class DefaultDinnerTonightServiceManager(private val context: Context) : DinnerTonightServiceManager {
-    private val environment: DinnerTonightServiceEnvironment = getServiceEnviroment()
+class DefaultDinnerTonightServiceManager(private val context: Context, private val environment: DinnerTonightServiceEnvironment)
+    : DinnerTonightServiceManager {
+
     private val config: HTTPService.Config = HTTPService.Config(baseUrl = environment.baseUrl())
 
     init {
@@ -38,14 +41,16 @@ class DefaultDinnerTonightServiceManager(private val context: Context) : DinnerT
 
     override fun serverInfoService(): ServerInfoService = DinnerTonightServerInfoService(config = this.config)
 
-    private fun getServiceEnviroment(): DinnerTonightServiceEnvironment {
-        if (BuildConfig.DEBUG) {
-            return DinnerTonightServiceEnvironment.Dev
-        }
-        return DinnerTonightServiceEnvironment.Release
+//    override fun productsService(): ProductService = DinnerTonightProductService(config = this.config)
+
+    override fun productService(): ProductService  = MockDinnerTonightProductService(context = this.context)
+
+//    override fun storeService(): StoreService = DinnerTonightStoreService(config = this.config)
+
+    override fun storeService(): StoreService  = MockDinnerTonightStoreService(context = this.context)
+
+    override fun setOAuthToken(token: OAuthToken?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun productsService(): ProductsService = DinnerTonightProductsService(context)
-
-    override fun storeService(): StoreService = DinnerTonightStoreService(context)
 }
