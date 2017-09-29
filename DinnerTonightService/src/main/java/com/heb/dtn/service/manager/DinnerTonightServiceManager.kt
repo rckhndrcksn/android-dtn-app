@@ -1,13 +1,15 @@
 package com.heb.dtn.service.manager
 
+import com.heb.dtn.service.api.ProductsService
 import com.heb.dtn.service.api.ServerInfoService
+import com.heb.dtn.service.api.StoreService
 import java.net.URL
 
 //
 // Created by Khuong Huynh on 9/22/17.
 //
 
-enum class DinnerTonightServiceEnvironment {
+internal enum class DinnerTonightServiceEnvironment {
     Dev
     , Staging
     , Release
@@ -24,4 +26,7 @@ interface DinnerTonightServiceManager {
 
     fun serverInfoService(): ServerInfoService
 
+    fun productsService(): ProductsService
+
+    fun storeService(): StoreService
 }
