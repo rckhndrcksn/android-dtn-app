@@ -40,13 +40,16 @@ class HomeActivity : AppCompatActivity() {
                     AppProxy.proxy.serviceManager().storeService().getStores(latitude = 29.594423, longitude = -98.456813, radius = 5.0)
                 }
                 .then {
-                    if (it.items == null) throw IllegalArgumentException()
                     val sb = StringBuilder()
                     sb.append(this.products.text).append("\n")
 
-                    it.items?.forEach {
-                        val str = JSONEncoder().encode(it)?.toString(Charset.defaultCharset()) ?: ""
-                        sb.append(str).append("\n\n\n")
+                    if (it.items == null) {
+                        sb.append("No stores found.")
+                    } else {
+                        it.items?.forEach {
+                            val str = JSONEncoder().encode(it)?.toString(Charset.defaultCharset()) ?: ""
+                            sb.append(str).append("\n\n\n")
+                        }
                     }
                     this.products.text = sb.toString()
                 }

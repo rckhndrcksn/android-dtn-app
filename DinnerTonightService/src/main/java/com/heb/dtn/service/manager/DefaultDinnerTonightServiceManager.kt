@@ -35,19 +35,16 @@ class DefaultDinnerTonightServiceManager(private val context: Context, private v
         // Custom mimeType for Json
         val jsonDecoder = JSONDecoder()
         decoders["application/vnd.spring-boot.actuator.v1+json;charset=UTF-8"] = jsonDecoder
+        decoders["application/json;charset=UTF-8"] = jsonDecoder
 
         this.config.decoders = decoders
     }
 
     override fun serverInfoService(): ServerInfoService = DinnerTonightServerInfoService(config = this.config)
 
-//    override fun productsService(): ProductService = DinnerTonightProductService(config = this.config)
+    override fun productService(): ProductService = DinnerTonightProductService(config = this.config)
 
-    override fun productService(): ProductService  = MockDinnerTonightProductService(context = this.context)
-
-//    override fun storeService(): StoreService = DinnerTonightStoreService(config = this.config)
-
-    override fun storeService(): StoreService  = MockDinnerTonightStoreService(context = this.context)
+    override fun storeService(): StoreService = DinnerTonightStoreService(config = this.config)
 
     override fun setOAuthToken(token: OAuthToken?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

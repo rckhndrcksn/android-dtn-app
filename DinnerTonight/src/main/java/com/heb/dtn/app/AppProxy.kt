@@ -31,7 +31,7 @@ open class AppProxy : MultiDexApplication(), AccountManager.Delegate {
 
         val context = applicationContext
 //        this.environment = if (BuildConfig.DEBUG) DinnerTonightServiceEnvironment.Staging else DinnerTonightServiceEnvironment.Release
-        this.environment = DinnerTonightServiceEnvironment.Staging
+        this.environment = DinnerTonightServiceEnvironment.Dev
 
         this.serviceManager = DefaultDinnerTonightServiceManager(context = context, environment = this.environment)
         this.preferences = AppPreferences(context)

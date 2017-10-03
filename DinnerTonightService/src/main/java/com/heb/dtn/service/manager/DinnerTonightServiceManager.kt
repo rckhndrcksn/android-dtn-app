@@ -17,6 +17,7 @@ enum class DinnerTonightServiceEnvironment {
 
     internal fun baseUrl(): URL =
         when(this) {
+            Dev -> URL("http://35.202.209.115/")
             Staging -> URL("http://35.202.145.21/")
             else -> URL("http://35.202.145.21/")
         }
