@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   A common layout for fragment with a list view and a "RxApp.Button.Form" styled
+   action button and a FloatingActionButton at bottom.
+-->
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.heb.dtn.foundation.widget.recyclerview.RecyclerListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="0dp"/>
+
+        <Button
+            android:id="@+id/action_button"
+            style="@style/RxApp.Button.Form" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/button_form_float_margin"
+        android:layout_marginEnd="@dimen/button_form_float_margin"
+        android:layout_marginBottom="@dimen/button_form_float_bottom_margin"
+        custom:layout_anchorGravity="top|right|end"
+        custom:layout_behavior="com.heb.foundation.widget.actionbutton.ScrollAwareFloatingActionButtonBehavior"/>
+
+</android.support.design.widget.CoordinatorLayout>

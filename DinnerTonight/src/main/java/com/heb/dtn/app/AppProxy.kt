@@ -5,6 +5,7 @@ import android.support.multidex.MultiDexApplication
 import com.heb.dtn.account.AccountManager
 import com.heb.dtn.foundation.promise.android.always
 import com.heb.dtn.service.domain.account.OAuthToken
+import com.heb.dtn.service.domain.store.Store
 import com.heb.dtn.service.manager.DefaultDinnerTonightServiceManager
 import com.heb.dtn.service.manager.DinnerTonightServiceEnvironment
 import com.heb.dtn.service.manager.DinnerTonightServiceManager
@@ -22,6 +23,11 @@ open class AppProxy : MultiDexApplication(), AccountManager.Delegate {
     lateinit private var environment: DinnerTonightServiceEnvironment
     val flow: AppFlow = AppFlow()
 
+    /**
+     * The default store to use for centering the map when location access permission is not granted.
+     */
+    lateinit var defaultCenterMapStore: Store
+
     companion object {
         lateinit var proxy: AppProxy
     }
@@ -32,6 +38,8 @@ open class AppProxy : MultiDexApplication(), AccountManager.Delegate {
         val context = applicationContext
 //        this.environment = if (BuildConfig.DEBUG) DinnerTonightServiceEnvironment.Staging else DinnerTonightServiceEnvironment.Release
         this.environment = DinnerTonightServiceEnvironment.Dev
+
+        this.defaultCenterMapStore = Store.defaultStore
 
         this.serviceManager = DefaultDinnerTonightServiceManager(context = context, environment = this.environment)
         this.preferences = AppPreferences(context)

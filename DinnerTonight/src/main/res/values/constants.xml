@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default Values -->
+    <string name="default_radius" type="dimen">5.0</string>
+    <integer name="default_store_details_zoom">15</integer>
+    <string name="default_store_latitude" type="dimen">29.4192143</string>
+    <string name="default_store_longitude" type="dimen">-98.4966322</string>
+
+    <!--Temp default zoom level -->
+    <integer name="larger_store_details_zoom">8</integer>
+
+</resources>

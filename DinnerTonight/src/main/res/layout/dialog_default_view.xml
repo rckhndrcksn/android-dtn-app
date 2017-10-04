@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/layoutContainer"
+    android:paddingTop="16dp"
+    android:paddingBottom="8dp"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:id="@+id/customLayoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/standardDialogContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="TextView"
+            android:layout_gravity="start"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/dialogAttributedMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/dialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="TextView" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogButtonsContainer"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:orientation="horizontal" />
+</LinearLayout>

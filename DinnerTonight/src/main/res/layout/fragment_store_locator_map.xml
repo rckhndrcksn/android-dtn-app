@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:cameraZoom="@integer/larger_store_details_zoom"
+        map:cameraTargetLat="@string/default_store_latitude"
+        map:cameraTargetLng="@string/default_store_longitude"
+        />
+</FrameLayout>

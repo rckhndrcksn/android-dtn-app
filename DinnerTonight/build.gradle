@@ -24,9 +24,7 @@ android {
         versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
 
-        // FIXME: Replace the applicationId with an official DinnerTonight app Id.
-        // We temporary use this same id from the commerce app for testing purposes.
-        applicationId "com.heb.dtn.android"
+        applicationId "com.heb.dtn"
         minSdkVersion project.property("androidMinSdkVersion").toInteger()
         targetSdkVersion project.property("androidTargetSdkVersion").toInteger()
 
