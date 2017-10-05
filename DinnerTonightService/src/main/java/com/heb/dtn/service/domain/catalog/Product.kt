@@ -10,7 +10,7 @@ class Product {
     var price: Float? = null
     var prepTime: String? = null
     var tag: String? = null
-    var numberOfServings: Int? = null
+    var numberOfServings: String? = null
     var romanceCopy: String? = null
     var ingredientsText: String? = null
     var prepInstructions: String? = null
