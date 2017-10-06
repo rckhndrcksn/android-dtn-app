@@ -7,7 +7,7 @@ import com.heb.dtn.service.domain.store.Store
 //
 
 class Profile {
-    var profileId: String? = null
+    var profileId: String = ""
     var firstName: String? = null
     var lastName: String? = null
     var prefix: String? = null

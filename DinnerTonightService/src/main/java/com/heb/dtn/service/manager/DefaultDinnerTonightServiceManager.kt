@@ -4,10 +4,12 @@ import android.content.Context
 import com.heb.dtn.foundation.service.Decoder
 import com.heb.dtn.foundation.service.HTTPService
 import com.heb.dtn.foundation.service.JSONDecoder
+import com.heb.dtn.service.api.CartService
 import com.heb.dtn.service.api.ProductService
 import com.heb.dtn.service.api.ServerInfoService
 import com.heb.dtn.service.api.StoreService
 import com.heb.dtn.service.domain.account.OAuthToken
+import com.heb.dtn.service.internal.dtn.DinnerTonightCartService
 import com.heb.dtn.service.internal.dtn.DinnerTonightProductService
 import com.heb.dtn.service.internal.dtn.DinnerTonightServerInfoService
 import com.heb.dtn.service.internal.dtn.DinnerTonightStoreService
@@ -45,6 +47,8 @@ class DefaultDinnerTonightServiceManager(private val context: Context, private v
     override fun productService(): ProductService = DinnerTonightProductService(config = this.config)
 
     override fun storeService(): StoreService = DinnerTonightStoreService(config = this.config)
+
+    override fun cartService(): CartService = DinnerTonightCartService(config = this.config)
 
     override fun setOAuthToken(token: OAuthToken?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

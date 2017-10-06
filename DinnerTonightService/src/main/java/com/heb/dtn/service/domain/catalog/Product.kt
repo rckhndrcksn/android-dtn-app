@@ -1,10 +1,13 @@
 package com.heb.dtn.service.domain.catalog
 
-/**
- * Created by jcarbo on 9/29/17.
- */
+//
+// Created by jcarbo on 9/29/17.
+//
+
+typealias ProductId = Int
+
 class Product {
-    var prodId: Int? = null
+    var prodId: ProductId = 0
     var upc: String? = null
     var displayName: String? = null
     var price: Float? = null

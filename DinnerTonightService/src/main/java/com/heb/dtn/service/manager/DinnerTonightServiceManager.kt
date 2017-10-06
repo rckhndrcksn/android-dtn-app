@@ -1,5 +1,6 @@
 package com.heb.dtn.service.manager
 
+import com.heb.dtn.service.api.CartService
 import com.heb.dtn.service.api.ProductService
 import com.heb.dtn.service.api.ServerInfoService
 import com.heb.dtn.service.api.StoreService
@@ -30,5 +31,7 @@ interface DinnerTonightServiceManager : DinnerTonightOAuthServiceManager {
     fun productService(): ProductService
 
     fun storeService(): StoreService
+
+    fun cartService(): CartService
 
 }

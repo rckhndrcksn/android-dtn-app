@@ -14,10 +14,8 @@ import com.inmotionsoftware.promise.Promise
 
 internal class DinnerTonightServerInfoService(config: HTTPService.Config) : HTTPService(config = config), ServerInfoService {
 
-    override fun serverStatus(): Promise<ServerStatus> {
-        val route = "api/v1/health"
-        return this.get(route = route, type = ServerStatus::class.java)
-    }
+    override fun serverStatus(): Promise<ServerStatus>
+        = this.get(route = "api/v1/health", type = ServerStatus::class.java)
 
     override fun isServerHealthy(): Promise<Boolean>
         = this.serverStatus().then { it.isUp()  }

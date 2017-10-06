@@ -5,7 +5,7 @@ package com.heb.dtn.service.domain.store
 //
 
 class Store {
-    var storeNumber: Long? = null
+    var storeNumber: Long = 0
     var name: String? = null
     var address: String? = null
     var address2: String? = null

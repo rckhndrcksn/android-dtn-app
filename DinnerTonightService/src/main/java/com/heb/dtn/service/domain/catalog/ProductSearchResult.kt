@@ -6,6 +6,6 @@ package com.heb.dtn.service.domain.catalog
 
 class ProductSearchResult {
 
-    var items: Array<Product>? = null
+    var items: List<Product> = emptyList()
 
 }

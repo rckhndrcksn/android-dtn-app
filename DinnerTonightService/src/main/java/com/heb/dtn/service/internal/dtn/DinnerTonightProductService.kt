@@ -12,9 +12,7 @@ import com.inmotionsoftware.promise.Promise
 
 class DinnerTonightProductService(config: HTTPService.Config) : HTTPService(config = config), ProductService {
 
-    override fun getProducts(): Promise<ProductSearchResult> {
-        val route = "api/v1/products"
-        return this.get(route = route, type = ProductSearchResult::class.java)
-    }
+    override fun getProducts(): Promise<ProductSearchResult>
+        = this.get(route = "api/v1/products", type = ProductSearchResult::class.java)
 
 }

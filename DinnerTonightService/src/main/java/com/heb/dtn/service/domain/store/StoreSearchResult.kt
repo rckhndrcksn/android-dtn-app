@@ -6,6 +6,6 @@ package com.heb.dtn.service.domain.store
 
 class StoreSearchResult {
 
-    var items: Array<Store>? = null
+    var items: List<Store> = emptyList()
 
 }
