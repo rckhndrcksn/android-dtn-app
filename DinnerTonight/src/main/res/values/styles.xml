@@ -13,4 +13,38 @@
         <item name="android:layout_gravity">center_horizontal|center</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="BaseCustomDialogFragment" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="colorButtonNormal">?attr/colorAccent</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+    <style name="LoginDialogStyle" parent="BaseCustomDialogFragment">
+        <item name="colorAccent">#12e479</item>
+    </style>
+
+    <style name="LoginErrorStyle" parent="BaseCustomDialogFragment">
+        <item name="colorAccent">#ff9600</item>
+    </style>
+
+    <style name="PasswordRecoveryDialogStyle" parent="BaseCustomDialogFragment">
+        <item name="colorAccent">#0f7cff</item>
+    </style>
+
+    <style name="DialogTitleStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/custom_dialog_title_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lines">1</item>
+    </style>
+
+    <style name="DialogAccentStyle">
+        <item name="android:layout_width">@dimen/custom_dialog_title_accent_width</item>
+        <item name="android:layout_height">@dimen/custom_dialog_title_accent_height</item>
+        <item name="android:layout_marginTop">@dimen/custom_dialog_title_accent_top_margin</item>
+        <item name="android:layout_marginBottom">@dimen/custom_dialog_title_accent_bottom_margin</item>
+        <item name="android:background">?attr/colorControlActivated</item>
+    </style>
 </resources>

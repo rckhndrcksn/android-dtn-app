@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DTNRoundedButton">
+        <attr name="borderColor" format="color|reference" />
+        <attr name="fillColor" format="color|reference" />
+        <attr name="disabledColor" format="color|reference" />
+        <!-- Shape of the rounded button. Can be either Rectangle or a Circle. -->
+        <attr name="shape">
+            <!-- Rectangle Shape -->
+            <enum name="rectangle" value="0" />
+            <!-- Oval shape -->
+            <enum name="oval" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

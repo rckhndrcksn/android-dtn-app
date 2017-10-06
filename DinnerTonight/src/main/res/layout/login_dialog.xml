@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingTop="@dimen/custom_dialog_top_padding"
+    android:paddingBottom="@dimen/custom_dialog_bottom_padding"
+    android:paddingLeft="@dimen/custom_dialog_side_padding"
+    android:paddingRight="@dimen/custom_dialog_side_padding">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="Login"
+        style="@style/DialogTitleStyle"/>
+
+    <View
+        android:id="@+id/titleAccent"
+        style="@style/DialogAccentStyle" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="25dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <include layout="@layout/login_button" />
+
+</LinearLayout>
