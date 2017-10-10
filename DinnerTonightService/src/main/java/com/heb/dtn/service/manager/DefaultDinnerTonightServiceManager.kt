@@ -1,9 +1,7 @@
 package com.heb.dtn.service.manager
 
 import android.content.Context
-import com.heb.dtn.foundation.service.Decoder
-import com.heb.dtn.foundation.service.HTTPService
-import com.heb.dtn.foundation.service.JSONDecoder
+import com.heb.dtn.foundation.service.*
 import com.heb.dtn.service.api.CartService
 import com.heb.dtn.service.api.ProductService
 import com.heb.dtn.service.api.ServerInfoService
@@ -38,8 +36,11 @@ class DefaultDinnerTonightServiceManager(private val context: Context, private v
         val jsonDecoder = JSONDecoder()
         decoders["application/vnd.spring-boot.actuator.v1+json;charset=UTF-8"] = jsonDecoder
         decoders["application/json;charset=UTF-8"] = jsonDecoder
-
         this.config.decoders = decoders
+
+        val encoders: MutableMap<String, Encoder> = mutableMapOf()
+        encoders["application/json"] = JSONEncoder()
+        this.config.encoders = encoders
     }
 
     override fun serverInfoService(): ServerInfoService = DinnerTonightServerInfoService(config = this.config)

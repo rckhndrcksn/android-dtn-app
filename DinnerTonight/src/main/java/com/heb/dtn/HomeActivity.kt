@@ -14,6 +14,8 @@ import com.heb.dtn.foundation.promise.android.catch
 import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.foundation.promise.android.thenp
 import com.heb.dtn.foundation.service.JSONEncoder
+import com.heb.dtn.fragment.CartListFragment
+import com.heb.dtn.fragment.ProductsListFragment
 import com.heb.dtn.locator.StoreLocatorActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -25,6 +27,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, ProductsListFragment())
+                    .commit()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,40 +54,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        AppProxy.proxy.serviceManager().productService()
-                .getProducts()
-                .then {
-                    if (it.items == null) throw IllegalArgumentException()
-
-                    this.products.setTextColor(Color.BLACK)
-                    val sb = StringBuilder("")
-                    it.items?.forEach {
-                        val str = JSONEncoder().encode(it)?.toString(Charset.defaultCharset()) ?: ""
-                        sb.append(str).append("\n\n\n")
-                    }
-                    this.products.text = sb.toString()
-                }
-                .thenp {
-                    AppProxy.proxy.serviceManager().storeService().getStores(latitude = 29.594423, longitude = -98.456813, radius = 5.0)
-                }
-                .then {
-                    val sb = StringBuilder()
-                    sb.append(this.products.text).append("\n")
-
-                    if (it.items == null) {
-                        sb.append("No stores found.")
-                    } else {
-                        it.items?.forEach {
-                            val str = JSONEncoder().encode(it)?.toString(Charset.defaultCharset()) ?: ""
-                            sb.append(str).append("\n\n\n")
-                        }
-                    }
-                    this.products.text = sb.toString()
-                }
-                .catch {
-                    this.products.setTextColor(Color.RED)
-                    this.products.text = "Something went wrong"
-                }
     }
 
 }
