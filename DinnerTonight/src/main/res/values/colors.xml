@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">@android:color/black</color>
     <color name="colorAccent">#FF4081</color>
     <color name="defaultBackground">#ffffff</color>
 
@@ -13,4 +13,11 @@
 
     <color name="snackBarText">#fff</color>
     <color name="snackBarActionText">@color/colorPrimary</color>
+
+    <color name="splash_activity_login_color">#12e479</color>
+    <color name="splash_activity_login_text_color">@android:color/white</color>
+    <color name="splash_activity_create_account_border_color">#12e479</color>
+    <color name="splash_activity_create_account_fill_color">@android:color/white</color>
+    <color name="splash_activity_create_account_text_color">@android:color/black</color>
+    <color name="guest_button_text_color">#b3b3ba</color>
 </resources>

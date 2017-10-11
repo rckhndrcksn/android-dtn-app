@@ -2,6 +2,9 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- removing window color to avoid overdraw when we set the background color of a layout -->
+        <item name="android:windowBackground">@null</item>
+
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/colorPrimary</item>
 
