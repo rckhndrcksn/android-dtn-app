@@ -8,8 +8,8 @@ import android.os.Build
 class VersionUtils {
     companion object {
         /**
-         * Returns true if the device is running Lollipop or greater.
+         * Returns true if the device is running Marshmallow or greater.
          */
-        fun isLollipopOrGreater(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+        fun isMarshmallowOrGreater(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
     }
 }
