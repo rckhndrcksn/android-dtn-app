@@ -21,6 +21,7 @@ abstract class DTNBaseDialogFragment: DialogFragment() {
         dialog?.let {
             it.window.setBackgroundDrawableResource(R.drawable.dialog_background)
             it.setCanceledOnTouchOutside(false)
+            it.window.setWindowAnimations(R.style.LoginCreateDialogAnimations)
         }
     }
 }

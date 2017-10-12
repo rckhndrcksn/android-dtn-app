@@ -13,6 +13,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import com.heb.dtn.login.LoginOrSignUpActivity
 import kotlinx.android.synthetic.main.bottom_sheet_dialog.view.*
 
@@ -67,6 +68,7 @@ class SplashActivity : AppCompatActivity() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val dialog = BottomSheetDialog(activity, theme)
             dialog.setCanceledOnTouchOutside(false)
+            dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             return dialog
         }
 

@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Custom dialog dimens -->
-    <dimen name="custom_dialog_side_margin">20dp</dimen>
-    <dimen name="view_header_title_height">30dp</dimen>
     <dimen name="custom_dialog_corner_radius">40dp</dimen>
     <dimen name="custom_dialog_top_padding">30dp</dimen>
     <dimen name="custom_dialog_bottom_padding">40dp</dimen>
-    <dimen name="view_pharmacy_info_height">90dp</dimen>
     <dimen name="custom_dialog_side_padding">40dp</dimen>
     <dimen name="custom_dialog_title_size">21dp</dimen>
     <dimen name="custom_dialog_title_accent_width">75dp</dimen>
     <dimen name="custom_dialog_title_accent_height">1dp</dimen>
     <dimen name="custom_dialog_title_accent_top_margin">15dp</dimen>
-    <dimen name="custom_dialog_title_accent_bottom_margin">7dp</dimen>
+    <dimen name="custom_dialog_title_accent_bottom_margin">14dp</dimen>
     <dimen name="rounded_button_corner_radius">30dp</dimen>
     <dimen name="rounded_button_stroke_width">2dp</dimen>
+
+    <dimen name="login_create_account_dialog_height">342dp</dimen>
+    <dimen name="create_account_complete_dialog_height">322dp</dimen>
+    <dimen name="create_account_edit_text_size">21dp</dimen>
+    <dimen name="create_account_edit_text_size_small">12dp</dimen>
+
+    <dimen name="view_pharmacy_info_height">90dp</dimen>
     <dimen name="button_default_height">40dp</dimen>
     <dimen name="button_form_height">55dp</dimen>
     <dimen name="button_form_float_margin">20dp</dimen>
     <dimen name="button_form_float_bottom_margin">70dp</dimen>
     <dimen name="fragment_map_list_peek_height">128dp</dimen>
 
+    <dimen name="view_header_title_height">30dp</dimen>
     <dimen name="text_medium">12sp</dimen>
     <dimen name="text_large">14sp</dimen>
 

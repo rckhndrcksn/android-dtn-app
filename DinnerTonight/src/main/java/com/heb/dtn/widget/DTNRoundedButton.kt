@@ -23,7 +23,8 @@ class DTNRoundedButton(context: Context, attrs: AttributeSet?) : Button(context,
 
     private var borderColor: Int = Color.WHITE
     private var fillColor: Int = Color.WHITE
-    private var disabledColor: Int = Color.WHITE
+    private var disabledFillColor: Int = Color.WHITE
+    private var disabledBorderColor: Int = Color.WHITE
     private var buttonShape: Int = Shape.Rectangle.value
     private var cornerRadius: Float = 0F
 
@@ -42,7 +43,8 @@ class DTNRoundedButton(context: Context, attrs: AttributeSet?) : Button(context,
         fillColor = typedArray.getColor(R.styleable.DTNRoundedButton_fillColor, defaultColor)
 
         val defaultDisabledColor = ColorUtils.setAlphaComponent(borderColor, 127)
-        disabledColor = typedArray.getColor(R.styleable.DTNRoundedButton_disabledColor, defaultDisabledColor)
+        disabledFillColor = typedArray.getColor(R.styleable.DTNRoundedButton_disabledFillColor, defaultDisabledColor)
+        disabledBorderColor = typedArray.getColor(R.styleable.DTNRoundedButton_disabledBorderColor, defaultDisabledColor)
         buttonShape = typedArray.getInt(R.styleable.DTNRoundedButton_shape, buttonShape)
         typedArray.recycle()
 
@@ -59,9 +61,9 @@ class DTNRoundedButton(context: Context, attrs: AttributeSet?) : Button(context,
                 intArrayOf(android.R.attr.state_enabled),
                 intArrayOf(android.R.attr.state_pressed),
                 intArrayOf())
-        val fillColorsArray = intArrayOf(disabledColor, fillColor, pressedColor, fillColor)
+        val fillColorsArray = intArrayOf(disabledFillColor, fillColor, pressedColor, fillColor)
         val fillInStateList = ColorStateList(statesArray, fillColorsArray)
-        val borderColorsArray = intArrayOf(disabledColor, borderColor, pressedColor, borderColor)
+        val borderColorsArray = intArrayOf(disabledBorderColor, borderColor, pressedColor, borderColor)
         val borderStateList = ColorStateList(statesArray, borderColorsArray)
 
         val gradientDrawable = createGradientDrawable()

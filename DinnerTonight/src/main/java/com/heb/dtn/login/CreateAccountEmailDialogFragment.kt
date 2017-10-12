@@ -1,17 +1,19 @@
-package com.heb.dtn.fragment
+package com.heb.dtn.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
+import com.heb.dtn.fragment.DTNFormDialogFragment
 
 /**
- * DialogFragment used for the user to login.
+ * Fragment to allow the user to set a password for their account.
  */
-class LoginDialogFragment: DTNBaseDialogFragment() {
+class CreateAccountEmailDialogFragment(): DTNFormDialogFragment() {
     override val dialogTheme: Int = R.style.BaseCustomDialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.login_dialog, container, false)
+            inflater.inflate(R.layout.create_account_email_fragment, container, false)
+
 }

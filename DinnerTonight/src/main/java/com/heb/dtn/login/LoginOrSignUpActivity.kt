@@ -1,6 +1,5 @@
 package com.heb.dtn.login
 
-import android.widget.Toast
 import com.heb.dtn.flow.core.BaseFlowActivity
 
 /**
@@ -12,10 +11,5 @@ class LoginOrSignUpActivity : BaseFlowActivity() {
     }
 
     override fun onStartFlow() {
-        if (intent.action == CREATE_ACCOUNT_ACTION) {
-            Toast.makeText(this, "Create account flow", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Login flow", Toast.LENGTH_SHORT).show()
-        }
     }
 }

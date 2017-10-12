@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="@dimen/create_account_complete_dialog_height"
+    style="@style/LoginCreateAccountDialogLayoutStyle">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="@string/create_acct_title"
+        style="@style/DialogTitleStyle"/>
+
+    <View
+        android:id="@+id/titleAccent"
+        style="@style/DialogAccentStyle"
+        android:layout_marginBottom="31dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14dp"
+        android:text="@string/acct_created_message"/>
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/create_account_edit_text_size"
+        android:textColor="?android:attr/textColorPrimary"/>
+
+    <com.heb.dtn.widget.DTNRoundedButton
+        android:id="@+id/login"
+        style="@style/CreateAccountNextButton.CreateComplete" />
+
+</LinearLayout>

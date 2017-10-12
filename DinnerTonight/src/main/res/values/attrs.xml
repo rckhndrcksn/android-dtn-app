@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="DTNDialogFragment">
+        <attr name="baseLayoutTopPadding" format="dimension|reference" />
+        <attr name="baseLayoutBottomPadding" format="dimension|reference" />
+        <attr name="baseLayoutStartPadding" format="dimension|reference" />
+        <attr name="baseLayoutRightPadding" format="dimension|reference" />
+        <attr name="titleAccentBottomMargin" format="dimension|reference" />
+    </declare-styleable>
+
     <declare-styleable name="DTNRoundedButton">
         <attr name="borderColor" format="color|reference" />
         <attr name="fillColor" format="color|reference" />
-        <attr name="disabledColor" format="color|reference" />
+        <attr name="disabledFillColor" format="color|reference" />
+        <attr name="disabledBorderColor" format="color|reference" />
         <!-- Shape of the rounded button. Can be either Rectangle or a Circle. -->
         <attr name="shape">
             <!-- Rectangle Shape -->

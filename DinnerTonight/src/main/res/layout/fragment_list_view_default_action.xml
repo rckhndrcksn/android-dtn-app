@@ -17,6 +17,6 @@
 
     <Button
         android:id="@+id/action_button"
-        style="@style/RxApp.Button.Form" />
+        style="@style/DTNApp.Button.Form" />
 
 </LinearLayout>

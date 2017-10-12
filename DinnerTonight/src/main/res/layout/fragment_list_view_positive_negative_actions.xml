@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/negative_action_button"
-            style="@style/RxApp.Button.Form"
+            style="@style/DTNApp.Button.Form"
             android:background="@android:color/transparent"
             android:textStyle="normal"
             android:text="@string/action_not_now"/>
@@ -40,7 +40,7 @@
 
         <Button
             android:id="@+id/positive_action_button"
-            style="@style/RxApp.Button.Form"
+            style="@style/DTNApp.Button.Form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
