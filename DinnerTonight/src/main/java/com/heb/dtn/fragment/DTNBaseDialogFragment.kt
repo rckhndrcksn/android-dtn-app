@@ -12,16 +12,17 @@ abstract class DTNBaseDialogFragment: DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, dialogTheme)
+        this.setStyle(DialogFragment.STYLE_NORMAL, dialogTheme)
     }
 
     override fun onStart() {
         super.onStart()
 
-        dialog?.let {
+        this.dialog?.let {
             it.window.setBackgroundDrawableResource(R.drawable.dialog_background)
             it.setCanceledOnTouchOutside(false)
             it.window.setWindowAnimations(R.style.LoginCreateDialogAnimations)
         }
     }
+
 }

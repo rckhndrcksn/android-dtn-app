@@ -14,12 +14,12 @@
     <color name="snackBarText">#fff</color>
     <color name="snackBarActionText">@color/colorPrimary</color>
 
-    <color name="splash_activity_login_color">#12e479</color>
-    <color name="splash_activity_login_text_color">@android:color/white</color>
-    <color name="splash_activity_create_account_border_color">#12e479</color>
-    <color name="splash_activity_create_account_fill_color">@android:color/white</color>
-    <color name="splash_activity_create_account_text_color">@android:color/black</color>
-    <color name="guest_button_text_color">#b3b3ba</color>
+    <color name="login_action_color">#12e479</color>
+    <color name="login_action_text_color">@android:color/white</color>
+    <color name="create_account_action_border_color">#12e479</color>
+    <color name="create_account_action_fill_color">@android:color/white</color>
+    <color name="create_account_action_text_color">@android:color/black</color>
+    <color name="continue_as_guest_action_text_color">#b3b3ba</color>
     <color name="forgot_password_text_color">#0f7cff</color>
 
     <color name="next_button_disabled_text_color">#b3b3ba</color>

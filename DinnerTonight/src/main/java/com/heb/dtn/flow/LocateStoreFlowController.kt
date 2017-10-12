@@ -11,7 +11,6 @@ import com.heb.dtn.locator.*
 import com.heb.dtn.locator.domain.StoreItem
 import com.heb.dtn.extensions.hide
 import com.heb.dtn.service.domain.profile.Profile
-import com.heb.dtn.service.domain.profile.forms.UpdateProfile
 import com.inmotionsoftware.imsflow.*
 import com.heb.dtn.R
 import com.heb.dtn.foundation.promise.android.*

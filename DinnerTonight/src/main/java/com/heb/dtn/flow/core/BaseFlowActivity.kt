@@ -7,16 +7,13 @@ import android.widget.ProgressBar
 import com.heb.dtn.R
 import com.heb.dtn.utils.UIControlDelegate
 import com.heb.dtn.utils.UIControlDelegation
+import com.inmotionsoftware.imsflow.FlowActivity
 
 
-abstract class BaseFlowActivity : PortraitFlowActivity(), UIControlDelegate by UIControlDelegation()  {
-    @LayoutRes open val layoutResId: Int = R.layout.activity_base_flow_default
-
+abstract class BaseFlowActivity : FlowActivity(), UIControlDelegate by UIControlDelegation()  {
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        this.setContentView(layoutResId)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar?
         toolbar?.let {

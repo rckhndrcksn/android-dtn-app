@@ -29,7 +29,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".AppLandingActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,7 +39,8 @@
 
         <activity android:name=".HomeActivity"
             android:label="Dinner Tonight"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,13 +50,13 @@
         <activity
             android:name="com.heb.dtn.locator.StoreLocatorActivity"
             android:label="@string/view_title_pharmacy_locator"
-            android:parentActivityName="com.heb.dtn.HomeActivity">
+            android:parentActivityName="com.heb.dtn.HomeActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.heb.dtn.HomeActivity" />
         </activity>
 
-        <activity android:name=".login.LoginOrSignUpActivity" />
     </application>
 
 </manifest>

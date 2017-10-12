@@ -7,31 +7,31 @@
     android:gravity="center_horizontal">
 
     <com.heb.dtn.widget.DTNRoundedButton
-        android:id="@+id/login"
+        android:id="@+id/loginButton"
         android:layout_marginTop="50dp"
         android:text="@string/login_button"
-        android:textColor="@color/splash_activity_login_text_color"
-        app:fillColor="@color/splash_activity_login_color"
-        app:borderColor="@color/splash_activity_login_color"
+        android:textColor="@color/login_action_text_color"
+        app:fillColor="@color/login_action_color"
+        app:borderColor="@color/login_action_color"
         style="@style/BottomSheetDialogButtons" />
 
     <com.heb.dtn.widget.DTNRoundedButton
-        android:id="@+id/createAccount"
+        android:id="@+id/createAccountButton"
         android:text="@string/sign_up_button"
-        android:textColor="@color/splash_activity_create_account_text_color"
-        app:fillColor="@color/splash_activity_create_account_fill_color"
-        app:borderColor="@color/splash_activity_login_color"
+        android:textColor="@color/create_account_action_text_color"
+        app:fillColor="@color/create_account_action_fill_color"
+        app:borderColor="@color/login_action_color"
         style="@style/BottomSheetDialogButtons" />
 
     <Button
-        android:id="@+id/guest"
+        android:id="@+id/continueAsGuestButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/guest_button"
         android:textStyle="italic"
-        android:textColor="@color/guest_button_text_color"
+        android:textColor="@color/continue_as_guest_action_text_color"
         android:layout_marginBottom="20dp"
-        android:textSize="14dp"
+        android:textSize="14sp"
         style="?attr/borderlessButtonStyle"/>
 
 </LinearLayout>
