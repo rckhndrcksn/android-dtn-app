@@ -1,6 +1,7 @@
 package com.heb.dtn.service.api
 
 import com.heb.dtn.service.domain.profile.Profile
+import com.heb.dtn.service.domain.profile.ProfileId
 import com.heb.dtn.service.domain.profile.RegistrationResult
 import com.heb.dtn.service.domain.profile.forms.Registration
 import com.heb.dtn.service.domain.profile.forms.UpdateProfile
@@ -14,9 +15,9 @@ interface AccountService {
 
     fun updateProfile(form: UpdateProfile): Promise<Boolean>
 
-    fun changePassword(from: String, to: String, profileId: String): Promise<Boolean>
+    fun changePassword(from: String, to: String, profileId: ProfileId): Promise<Boolean>
 
-    fun getProfile(profileId: String): Promise<Profile>
+    fun getProfile(profileId: ProfileId): Promise<Profile>
 
     fun createAccount(form: Registration): Promise<RegistrationResult>
 

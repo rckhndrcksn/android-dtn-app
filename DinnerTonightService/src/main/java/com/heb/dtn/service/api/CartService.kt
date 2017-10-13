@@ -16,9 +16,9 @@ interface CartService {
 
     fun getCart(cartId: CartId): Promise<Cart>
 
-    fun updateCart(cartId: CartId, product: CartProduct): Promise<Cart>
+    fun updateCart(cartId: CartId, cartProduct: CartProduct): Promise<Cart>
 
 }
 
 fun CartService.updateCart(cartId: CartId, productId: ProductId, quantity: Int) =
-        this.updateCart(cartId = cartId, product = CartProduct(productId = productId, quantity = quantity))
+        this.updateCart(cartId = cartId, cartProduct = CartProduct(productId = productId, quantity = quantity))

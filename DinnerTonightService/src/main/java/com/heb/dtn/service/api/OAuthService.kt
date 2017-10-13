@@ -1,6 +1,7 @@
 package com.heb.dtn.service.api
 
 import com.heb.dtn.service.domain.account.OAuthToken
+import com.heb.dtn.service.domain.profile.ProfileId
 import com.inmotionsoftware.promise.Promise
 
 //
@@ -13,6 +14,6 @@ interface OAuthService {
 
     fun authenticate(refreshToken: String): Promise<OAuthToken>
 
-    fun unauthenticate(profileId: String): Promise<Boolean>
+    fun unauthenticate(profileId: ProfileId): Promise<Boolean>
 
 }

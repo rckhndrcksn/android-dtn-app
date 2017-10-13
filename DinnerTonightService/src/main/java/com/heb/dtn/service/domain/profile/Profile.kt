@@ -6,8 +6,10 @@ import com.heb.dtn.service.domain.store.Store
 // Created by Khuong Huynh on 9/27/17.
 //
 
+typealias ProfileId = String
+
 class Profile {
-    var profileId: String = ""
+    var profileId: ProfileId = ""
     var firstName: String? = null
     var lastName: String? = null
     var prefix: String? = null

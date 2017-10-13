@@ -99,7 +99,7 @@ class ProductsListFragment: Fragment(), ProductView.AddToCartListener {
 
     private fun updateCart(product: CartProduct) {
         AppProxy.proxy.serviceManager().cartService()
-                .updateCart(cartId = cart!!.cartId, product = product)
+                .updateCart(cartId = this.cart?.cartId ?: 0, cartProduct = product)
                 .then {
                     Toast.makeText(context, "Product added to cart", Toast.LENGTH_SHORT).show()
                 }

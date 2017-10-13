@@ -43,7 +43,7 @@ class CartListFragment: Fragment, CartProductView.Listener {
     override fun remove(product: CartProduct) {
         product.quantity = 0
        AppProxy.proxy.serviceManager().cartService()
-               .updateCart(cartId = cart.cartId, product = product)
+               .updateCart(cartId = cart.cartId, cartProduct = product)
                .then {
                    Toast.makeText(context, "Item removed", Toast.LENGTH_SHORT).show()
                    cart = it
