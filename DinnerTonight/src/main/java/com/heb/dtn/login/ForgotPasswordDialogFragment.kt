@@ -6,24 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
+import com.heb.dtn.extensions.domain.isValidEmail
 import com.heb.dtn.fragment.DTNFormDialogFragment
-import kotlinx.android.synthetic.main.create_account_password_fragment.*
+import kotlinx.android.synthetic.main.forgot_password_dialog.*
 
 /**
- * Fragment to allow the user to set a password for their account.
+ * DialogFragment used to reset the user's password.
  */
-class CreateAccountPasswordDialogFragment(): DTNFormDialogFragment() {
-    override val dialogTheme: Int = R.style.BaseCustomDialogFragment
+class ForgotPasswordDialogFragment: DTNFormDialogFragment() {
+    override val dialogTheme: Int = R.style.PasswordRecoveryDialogStyle
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.create_account_password_fragment, container, false)
+            inflater.inflate(R.layout.forgot_password_dialog, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        password.addTextChangedListener(this)
+
+        this.email.addTextChangedListener(this)
     }
 
     override fun afterTextChanged(s: Editable?) {
-        next.isEnabled = !password.text.isNullOrBlank() && password.text.length >= 8 && password.text.contains(Regex("\\d"))
+        this.resetPassword.isEnabled = this.email.text.toString().isValidEmail
     }
 }

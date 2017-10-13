@@ -1,6 +1,7 @@
 package com.heb.dtn.flow.core
 
 import android.os.Bundle
+import android.support.annotation.LayoutRes
 import android.support.v7.widget.Toolbar
 import android.widget.ProgressBar
 import com.heb.dtn.R
@@ -9,11 +10,13 @@ import com.heb.dtn.utils.UIControlDelegation
 
 
 abstract class BaseFlowActivity : PortraitFlowActivity(), UIControlDelegate by UIControlDelegation()  {
+    @LayoutRes open val layoutResId: Int = R.layout.activity_base_flow_default
+
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        this.setContentView(R.layout.activity_base_flow_default)
+        this.setContentView(layoutResId)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar?
         toolbar?.let {

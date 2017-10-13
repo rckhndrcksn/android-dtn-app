@@ -18,6 +18,11 @@ class CreateAccountNameDialogFragment(): DTNFormDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.create_account_name_fragment, container, false)
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        firstName.addTextChangedListener(this)
+        lastName.addTextChangedListener(this)
+    }
 
     override fun afterTextChanged(s: Editable?) {
         next.isEnabled = !firstName.text.isNullOrBlank() && !lastName.text.isNullOrBlank()

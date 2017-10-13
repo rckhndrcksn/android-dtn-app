@@ -20,9 +20,9 @@
     <color name="splash_activity_create_account_fill_color">@android:color/white</color>
     <color name="splash_activity_create_account_text_color">@android:color/black</color>
     <color name="guest_button_text_color">#b3b3ba</color>
+    <color name="forgot_password_text_color">#0f7cff</color>
 
     <color name="next_button_disabled_text_color">#b3b3ba</color>
     <color name="next_button_enabled_text_color">@android:color/black</color>
-    <color name="next_button_border_color">#12e479</color>
     <color name="next_button_disabled_color">#b3b3ba</color>
 </resources>

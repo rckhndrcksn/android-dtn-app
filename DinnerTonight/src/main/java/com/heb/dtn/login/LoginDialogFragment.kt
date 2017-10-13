@@ -1,31 +1,33 @@
 package com.heb.dtn.login
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
 import com.heb.dtn.extensions.domain.isValidEmail
 import com.heb.dtn.fragment.DTNFormDialogFragment
-import kotlinx.android.synthetic.main.create_account_email_fragment.*
+import com.heb.dtn.utils.KeyboardUtils
+import kotlinx.android.synthetic.main.login_dialog.*
 
 /**
- * Fragment to allow the user to set a password for their account.
+ * DialogFragment used for the user to login.
  */
-class CreateAccountEmailDialogFragment(): DTNFormDialogFragment() {
+class LoginDialogFragment: DTNFormDialogFragment() {
     override val dialogTheme: Int = R.style.BaseCustomDialogFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.create_account_email_fragment, container, false)
+            inflater.inflate(R.layout.login_dialog, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         email.addTextChangedListener(this)
+        password.addTextChangedListener(this)
+        KeyboardUtils.requestFocus(activity, email)
     }
 
-    override fun afterTextChanged(s: Editable?) {
-        next.isEnabled = email.text.toString().isValidEmail
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        this.login.isEnabled = this.email.text.toString().isValidEmail && this.password.text.toString().isNotEmpty()
     }
 }

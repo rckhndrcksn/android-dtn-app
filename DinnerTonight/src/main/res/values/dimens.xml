@@ -14,6 +14,8 @@
     <dimen name="rounded_button_stroke_width">2dp</dimen>
 
     <dimen name="login_create_account_dialog_height">342dp</dimen>
+    <dimen name="login_edit_text_size">21dp</dimen>
+    <dimen name="forgot_password_text_size">14dp</dimen>
     <dimen name="create_account_complete_dialog_height">322dp</dimen>
     <dimen name="create_account_edit_text_size">21dp</dimen>
     <dimen name="create_account_edit_text_size_small">12dp</dimen>

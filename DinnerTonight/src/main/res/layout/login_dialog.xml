@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:paddingTop="@dimen/custom_dialog_top_padding"
-    android:paddingBottom="@dimen/custom_dialog_bottom_padding"
-    android:paddingLeft="@dimen/custom_dialog_side_padding"
-    android:paddingRight="@dimen/custom_dialog_side_padding">
+    style="@style/LoginCreateAccountDialogLayoutStyle">
 
     <TextView
         android:id="@+id/title"
-        android:text="Login"
+        android:text="@string/login_title"
         style="@style/DialogTitleStyle"/>
 
     <View
@@ -23,25 +16,43 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"/>
+            android:id="@+id/email"
+            style="@style/EmailEditTextStyle"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:layout_marginBottom="25dp">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputEditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"/>
+            android:layout_marginTop="21dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password"
+                style="@style/PasswordEditTextStyle"/>
 
-    <include layout="@layout/login_button" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/forgot"
+            android:layout_width="47dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/forgot_password_text_size"
+            android:textStyle="italic"
+            android:textColor="@color/forgot_password_text_color"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="15dp"
+            android:text="@string/forgot_pw"
+            android:background="?attr/selectableItemBackground"
+            android:filterTouchesWhenObscured="true"/>
+
+    </FrameLayout>
+
+    <com.heb.dtn.widget.DTNRoundedButton
+        android:id="@+id/login"
+        style="@style/LoginButtonStyle"/>
 
 </LinearLayout>
