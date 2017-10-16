@@ -2,15 +2,9 @@ package com.heb.dtn.service.manager
 
 import android.content.Context
 import com.heb.dtn.foundation.service.*
-import com.heb.dtn.service.api.CartService
-import com.heb.dtn.service.api.ProductService
-import com.heb.dtn.service.api.ServerInfoService
-import com.heb.dtn.service.api.StoreService
+import com.heb.dtn.service.api.*
 import com.heb.dtn.service.domain.account.OAuthToken
-import com.heb.dtn.service.internal.dtn.DinnerTonightCartService
-import com.heb.dtn.service.internal.dtn.DinnerTonightProductService
-import com.heb.dtn.service.internal.dtn.DinnerTonightServerInfoService
-import com.heb.dtn.service.internal.dtn.DinnerTonightStoreService
+import com.heb.dtn.service.internal.dtn.*
 import com.heb.dtn.service.internal.dtn.mock.MockDinnerTonightProductService
 import com.heb.dtn.service.internal.dtn.mock.MockDinnerTonightStoreService
 
@@ -55,4 +49,5 @@ class DefaultDinnerTonightServiceManager(private val context: Context, private v
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun orderService(): OrderService = DinnerTonightOrderService(config = this.config)
 }

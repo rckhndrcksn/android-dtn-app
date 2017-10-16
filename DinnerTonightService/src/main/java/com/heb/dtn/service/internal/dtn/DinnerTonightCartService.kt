@@ -3,6 +3,7 @@ package com.heb.dtn.service.internal.dtn
 import com.heb.dtn.foundation.service.HTTPService
 import com.heb.dtn.foundation.service.get
 import com.heb.dtn.foundation.service.post
+import com.heb.dtn.foundation.service.put
 import com.heb.dtn.service.api.CartService
 import com.heb.dtn.service.domain.cart.Cart
 import com.heb.dtn.service.domain.cart.CartId
@@ -22,6 +23,6 @@ class DinnerTonightCartService(config: HTTPService.Config) : HTTPService(config 
         = this.get(route = "api/v1/cart/$cartId", type = Cart::class.java)
 
     override fun updateCart(cartId: CartId, cartProduct: CartProduct): Promise<Cart>
-        = this.post(route = "api/v1/cart/$cartId", body = UploadBody.Json(cartProduct), type = Cart::class.java)
+        = this.put(route = "api/v1/cart/$cartId", body = UploadBody.Json(cartProduct), type = Cart::class.java)
 
 }

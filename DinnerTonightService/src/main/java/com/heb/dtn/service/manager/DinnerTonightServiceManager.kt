@@ -1,9 +1,6 @@
 package com.heb.dtn.service.manager
 
-import com.heb.dtn.service.api.CartService
-import com.heb.dtn.service.api.ProductService
-import com.heb.dtn.service.api.ServerInfoService
-import com.heb.dtn.service.api.StoreService
+import com.heb.dtn.service.api.*
 import java.net.URL
 
 //
@@ -33,5 +30,7 @@ interface DinnerTonightServiceManager : DinnerTonightOAuthServiceManager {
     fun storeService(): StoreService
 
     fun cartService(): CartService
+
+    fun orderService(): OrderService
 
 }

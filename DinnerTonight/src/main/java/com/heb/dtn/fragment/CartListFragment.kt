@@ -15,7 +15,7 @@ import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.service.domain.cart.Cart
 import com.heb.dtn.service.domain.cart.CartProduct
 import com.heb.dtn.widget.CartProductView
-import kotlinx.android.synthetic.main.products_list_fragment.*
+import kotlinx.android.synthetic.main.cart_list_fragment.*
 
 /**
  * Created by jcarbo on 10/9/17.
@@ -29,20 +29,34 @@ class CartListFragment: Fragment, CartProductView.Listener {
         this.cart = cart
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view =  inflater.inflate(R.layout.cart_list_fragment, container, false)
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.cart_list_fragment, container, false)
+
+
 
     override fun onResume() {
         super.onResume()
         recyclerView.adapter = CartProductsAdapter(context, cart.cartId, cart.products, this)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        checkout.setOnClickListener {
+            AppProxy.proxy.serviceManager().orderService().createOrder(cart)
+                    .then {
+                        if (it.success) {
+                            Toast.makeText(context, "order placed", Toast.LENGTH_SHORT).show()
+                            cart = Cart()
+                            recyclerView.adapter = CartProductsAdapter(context, cart.cartId, cart.products, this)
+                        } else {
+                            Toast.makeText(context, "order failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .catch { Toast.makeText(context, "order failed", Toast.LENGTH_SHORT).show() }
+        }
     }
 
     override fun remove(product: CartProduct) {
         product.quantity = 0
-       AppProxy.proxy.serviceManager().cartService()
+        AppProxy.proxy.serviceManager().cartService()
                .updateCart(cartId = cart.cartId, cartProduct = product)
                .then {
                    Toast.makeText(context, "Item removed", Toast.LENGTH_SHORT).show()
