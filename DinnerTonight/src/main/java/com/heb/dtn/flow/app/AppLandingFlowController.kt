@@ -43,6 +43,9 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
                 .add(from = State.PromptSelection, to = State.Login)
                 .add(from = State.PromptSelection, to = State.SignUp)
 
+                .add(from = State.Login, to = State.Done)
+                .add(from = State.SignUp, to = State.Done)
+
                 .addFromAny(to = State.Fail)
     }
 
@@ -84,7 +87,11 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
     }
 
     private fun onLogin(state: State, with: Any?) {
-        TODO("To Implement")
+        AppProxy.proxy.flow.login(context = this.context, fragmentContainerView = this.fragmentContainerView)
+                .back { this.transition(from = state, to = State.PromptSelection) }
+                .cancel { this.transition(from = state, to = State.PromptSelection) }
+                .complete { this.transition(from = state, to = State.Done, with = Result.Authenticated()) }
+                .catch { this.transition(from = state, to = State.Fail) }
     }
 
     private fun onSignUp(state: State, with: Any?) {

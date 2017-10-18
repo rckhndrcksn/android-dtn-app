@@ -50,9 +50,9 @@ class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config)
                     LoginResponse(
                         profile = Profile(
                             userId = resp.UID,
-                            firstName = resp.profile.firstName ?: "",
-                            lastName = resp.profile.lastName ?: "",
-                            email = resp.profile.email
+                            firstName = resp.profile?.firstName ?: "",
+                            lastName = resp.profile?.lastName ?: "",
+                            email = resp.profile?.email ?: ""
                         ),
                         uid = resp.UID,
                         uidSignature = resp.UIDSignature,

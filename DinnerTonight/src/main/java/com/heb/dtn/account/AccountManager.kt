@@ -92,6 +92,16 @@ class AccountManager(private val context: Context, private val environment: Dinn
 
     fun isAuthenticated(): Boolean = (this.authToken != null && this.profile != null)
 
+    fun login(email: String, password: String): Promise<Unit> {
+        return this.ssoService.login(email = email, password = password)
+                .thenp {
+                    this.accountService.getJwt(uid = it.uid, signature = it.uidSignature, timestamp = it.timestamp)
+                }
+                .then {
+                    // TODO: deal with jwt token
+                }
+    }
+
     fun createAccount(firstName: String, lastName: String, email: String, password: String): Promise<Unit> {
         //MOTODO
 
@@ -117,7 +127,8 @@ class AccountManager(private val context: Context, private val environment: Dinn
                 }
     }
 
-    fun resetPassword(email: String): Promise<Unit> = this.accountService.resetPassword(email = email)
+    fun forgotPassword(email: String): Promise<Unit> = this.ssoService.forgotPassword(email = email).asVoid()
+
 
 //    fun changePassword(from: String, to: String): Promise<Boolean> {
 //        if (!this.isAuthenticated()) return Promise(error=Throwable("Cannot change password for unauthenticated user."))

@@ -1,6 +1,5 @@
 package com.heb.dtn;
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -38,16 +37,13 @@ class AppLandingActivity : FlowActivity(),  UIControlDelegate by UIControlDelega
     private fun startFlow() {
         if (this.flow != null) return
         this.flow = AppProxy.proxy.flow.appLanding(context = this, fragmentContainerView = R.id.fragmentContainer)
-        this.flow!!.back { this.finishFlow(result = Activity.RESULT_CANCELED) }
-                .cancel { this.finishFlow(result = Activity.RESULT_CANCELED) }
-                .complete { this.finishFlow(result = Activity.RESULT_OK) }
+        this.flow!!.back { this.finishFlow() }
+                .cancel { this.finishFlow() }
+                .complete { this.finishFlow() }
     }
 
-    private fun finishFlow(result: Int) {
-        val intent = Intent(this, HomeActivity::class.java)
-        this.startActivity(intent)
-
-        this.setResult(result)
+    private fun finishFlow() {
+        this.startActivity(Intent(this, HomeActivity::class.java))
         this.finish()
     }
 

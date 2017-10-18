@@ -39,9 +39,11 @@ sealed class AccountServiceError : Throwable() {
 
 interface AccountService {
 
-    fun resetPassword(email: String): Promise<Unit>
+    //fun resetPassword(email: String): Promise<Unit>
 
     fun finalizeAccount(token: Registration, firstName: String, lastName: String): Promise<Session>
+
+    fun getJwt(uid: UID, signature: String, timestamp: String): Promise<String>
 
     fun getProfile(): Promise<Profile>
 

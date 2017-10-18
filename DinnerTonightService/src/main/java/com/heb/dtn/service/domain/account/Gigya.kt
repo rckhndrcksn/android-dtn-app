@@ -315,11 +315,11 @@ internal class Gigya private constructor () {
 
     class Profile(
         var email: String,
-        var firstName: String,
-        var lastName: String,
-        var age: String,
-        var gender: String,
-        var country: String
+        var firstName: String?,
+        var lastName: String?,
+        var age: String?,
+        var gender: String?,
+        var country: String?
     )
 
     class ProviderUID(
@@ -597,7 +597,7 @@ internal class Gigya private constructor () {
         )
 
         class LoginResponse(
-            var newUser: Boolean, // Indicates whether the user logging in is new. The parameter is returned only when it is set to "true", or when the user is missing the 'connectionIdentity' field in the DB. When 'RaaS' is enabled, If 'newUser == TRUE' and no required fields are missing, a 'SocialLeadToAccountNewUser' event is called and a new user is created. If account is pending verification, a 'SocializeLeadToAccountsPendingVerification' event is fired instead.
+            var newUser: Boolean?, // Indicates whether the user logging in is new. The parameter is returned only when it is set to "true", or when the user is missing the 'connectionIdentity' field in the DB. When 'RaaS' is enabled, If 'newUser == TRUE' and no required fields are missing, a 'SocialLeadToAccountNewUser' event is called and a new user is created. If account is pending verification, a 'SocializeLeadToAccountsPendingVerification' event is fired instead.
             var sessionInfo: SessionInfo?, // An object containg session information. The content of this object depends on the targetEnv parameter (see above). By default, if the targetEnv parameter is not set (your client environment is web), the sessionInfo object contains the the following string fields: cookieName and cookieValue.Please create a session cookie with the name and value specified by these fields. Alternatively, if  the targetEnv parameter is set to "mobile" (your client runs on a mobile), the sessionInfo object contains the the following string fields: sessionToken and sessionSecret. Please send these fields to your mobile client. On your client side, call GSAPI.setSession (using the Mobile SDK) to save them on the app's storage.
             var regToken: String?, // A ticket that is used to complete a registration process. The regToken is returned when there is a pending registration error, which occurs when the user did not complete the registration process, or there are missing fields in the user profile data that were defined as "required" in the Schema. The regToken is valid for one hour.
             var unverifiedEmails: List<String>?, // One or more unverified emails, in case there is a pending verification error.
@@ -605,31 +605,31 @@ internal class Gigya private constructor () {
             var UIDSignature: String, // The signature that should be used for login verification. See User.UID for more information.
             var signatureTimestamp: String, // The GMT time of the response in UNIX time format, i.e., the number of seconds since Jan. 1st 1970. The timestamp should be used for login verification. See User.UID for more information.
             var created: String, // The time the account was created in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
-            var createdTimestamp: Int, // The time the account was created in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
+            var createdTimestamp: Long, // The time the account was created in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
 //            var data: JSON object // Custom data. Any data that you want to store regarding the user that isn't part of the Profile object.
             var emails: Emails?, // The email addresses belonging to the user. This includes the following fields: verified - an array of strings representing the user's verified email addresses unverified - an array of strings representing the user's unverified email addresses. Note: emails must be specified explicitly in the include parameter in order to be included in the response.
             var identities: List<Identity>?, // An array of Identity Objects, each object represents a user's social identity. Each Identity Object contains imported data from a social network that the user has connected to. Note: You must explicitly specify identities within the include parameter for them to be included in the response: identities-active , identities-all, or identities-global to return only active identities, all identities of a site, or all identities of a site group, respectively. Be advised that if a user registers to your site using a Social Identity, then goes through the Forgot Password flow, a Site Login is added to their account, however, a Site Identity is not. A Site Identity can only be created when accounts.setAccountInfo is called on the user's account.
             var iRank: Int?, // Influencer rank of the user. The iRank is a number between 0-99, which denotes the percentile location of the user in comparison to all other site users as a site influencer. For example, if a user's iRank equals 60, this means that 60% of the site users influence less than this user, or in other words, this user is in the top 40% of site influencers. The iRank is calculated based on the amount of exposure this user provides the site. The calculation is done for the past several months, where recent activities receive higher ranks. The iRank is per site (per API key), the same user may have different ranks for different domains. The iRank calculation uses the following parameters: The number of friends this user has in all the networks to which he is connected through this site. The number of times this user shared something in this site (per month). The number of click backs that were made as a result of this user's shares.
-            var isActive: Boolean, // Indicates whether the account is active. The account is active once the user creates it even without finalizing it. The account can be deactivated, but it will still be registered if the registration process has been finalized.
-            var isLockedOut: Boolean, // Indicates whether the account is currently locked out. This parameter is not included in the response by default, and is not returned at all from accounts.search. If you wish to include it in a response, specify it as a value of the include parameter.
-            var isRegistered: Boolean, // Indicates whether the user is registered. The user is registered once his registration has been finalized.
-            var isVerified: Boolean, // Indicates whether the account email is verified.
-            var lastLogin: Date, // The time of the last login of the user in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
+            var isActive: Boolean?, // Indicates whether the account is active. The account is active once the user creates it even without finalizing it. The account can be deactivated, but it will still be registered if the registration process has been finalized.
+            var isLockedOut: Boolean?, // Indicates whether the account is currently locked out. This parameter is not included in the response by default, and is not returned at all from accounts.search. If you wish to include it in a response, specify it as a value of the include parameter.
+            var isRegistered: Boolean?, // Indicates whether the user is registered. The user is registered once his registration has been finalized.
+            var isVerified: Boolean?, // Indicates whether the account email is verified.
+            var lastLogin: Date?, // The time of the last login of the user in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
             var lastLoginLocation: List<Location>?, // The user's last login location. This includes the following fields: country - a string representing the two-character country code. state - a string representing the state, where available. city - a string representing the city name. coordinates - an object containing: lat - a double representing the latitude of the center of the city. lon - a double representing the longitude of the center of the city.
-            var lastLoginTimestamp: Long, // The time of the last login of the user in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
-            var lastUpdated: Date, // The time when the account object was last updated (either full or partial update) in ISO 8601 format, e.g., "1997-07-16T19:20:30Z". This is updated when any change is made to the account, for example, when a password is changed or a user logs in.
-            var lastUpdatedTimestamp: Long, // The time when the last update of the object occurred (either full or partial update) in Unix time including milliseconds, based on when the 'lastUpdated', 'Report AccountsFirstLogin' or 'AccountsReturnedLogin' events are fired.
+            var lastLoginTimestamp: Long?, // The time of the last login of the user in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
+            var lastUpdated: Date?, // The time when the account object was last updated (either full or partial update) in ISO 8601 format, e.g., "1997-07-16T19:20:30Z". This is updated when any change is made to the account, for example, when a password is changed or a user logs in.
+            var lastUpdatedTimestamp: Long?, // The time when the last update of the object occurred (either full or partial update) in Unix time including milliseconds, based on when the 'lastUpdated', 'Report AccountsFirstLogin' or 'AccountsReturnedLogin' events are fired.
             var loginIDs: List<LoginID>?, // The user's login identifiers. This includes the following fields: username - a string representing the username emails - an array of strings representing email addresses unverifiedEmails - an array of strings representing email addresses that were not validated Note: loginIDs must be specified explicitly in the include parameter in order to be included in the response.
-            var loginProvider: String, // The name of the provider that the user used in order to login.
-            var oldestDataUpdated: Date, // The time when the oldest data of the object was refreshed in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
-            var oldestDataUpdatedTimestamp: Long, // The time when the oldest data of the object was refreshed in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
+            var loginProvider: String?, // The name of the provider that the user used in order to login.
+            var oldestDataUpdated: Date?, // The time when the oldest data of the object was refreshed in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
+            var oldestDataUpdatedTimestamp: Long?, // The time when the oldest data of the object was refreshed in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
             var password: List<Password>?, // The user's Site account password details. Includes the following: hash - the hashed password hashSettings - object includes: algorithm - Represents the hash algorithm used to encrypt the password. rounds - Represents the number of iterations to perform the hashing. salt - Represents the BASE64 encoded value of the salt. format - Represents the template for merging clear-text passwords. This is only returned if the pwHashFormat parameter was set during account import and until the user's first login to Gigya (when the user's password is rehashed per the site's settings). See the RaaS Import Guide for additional information.
-            var profile: Profile, // The user's profile information as described in the object. The profile is returned in the response by default, but if the include parameter is used to specify other fields that should be provided in the response, the profile must also be specified explicitly in the include parameter.
+            var profile: Profile?, // The user's profile information as described in the object. The profile is returned in the response by default, but if the include parameter is used to specify other fields that should be provided in the response, the profile must also be specified explicitly in the include parameter.
             var rbaPolicy: String?, // The current RBA Policy defined for the specified user.
-            var registered: Date, // The time when the isRegistered parameter was set to true in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
-            var registeredTimestamp: Long, // The GMT time when the isRegistered parameter was set to true in UNIX time format, including milliseconds.
+            var registered: Date?, // The time when the isRegistered parameter was set to true in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
+            var registeredTimestamp: Long?, // The GMT time when the isRegistered parameter was set to true in UNIX time format, including milliseconds.
             var regSource: String?, // A string representing the source of the registration. Can be used to set varying destination pages in accounts.setPolicies.
-            var socialProviders: String, // A comma-separated list of the names of the providers to which the user is connected/logged in.
+            var socialProviders: String?, // A comma-separated list of the names of the providers to which the user is connected/logged in.
 //            var subscriptions: Subscriptions Object // The user's subscription information.
             var verified: Date?, // The time when the isVerified parameter was set to true in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
             var verifiedTimestamp: Long? // The GMT time when the isVerified parameter was set to true in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
