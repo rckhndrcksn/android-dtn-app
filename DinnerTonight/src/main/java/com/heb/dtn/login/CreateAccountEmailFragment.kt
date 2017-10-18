@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import com.heb.dtn.R
 import com.heb.dtn.extensions.domain.isValidEmail
 import com.heb.dtn.flow.core.BaseFormFlowDialogFragment
+import com.heb.dtn.service.api.AccountValidationFlags
 import com.heb.dtn.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.fragment_create_account_email.*
 
 /**
  * Fragment to allow the user to set a password for their account.
  */
-class CreateAccountEmailFragment : BaseFormFlowDialogFragment<Unit, String>() {
+class CreateAccountEmailFragment : BaseFormFlowDialogFragment<AccountValidationFlags, String>() {
 
     data class Result(val email: String)
 
@@ -42,7 +43,7 @@ class CreateAccountEmailFragment : BaseFormFlowDialogFragment<Unit, String>() {
         super.finish(result = result)
     }
 
-    override fun flowWillRun(args: Unit) {
+    override fun flowWillRun(args: AccountValidationFlags) {
         super.flowWillRun(args)
         KeyboardUtils.requestFocus(context, this.emailEditText)
     }

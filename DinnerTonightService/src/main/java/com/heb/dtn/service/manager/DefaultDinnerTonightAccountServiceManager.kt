@@ -2,9 +2,11 @@ package com.heb.dtn.service.manager
 
 import android.content.Context
 import com.heb.dtn.foundation.service.HTTPService
+import com.heb.dtn.foundation.service.JSONDecoder
 import com.heb.dtn.service.api.AccountService
 import com.heb.dtn.service.api.OAuthService
 import com.heb.dtn.service.api.SSOService
+import com.heb.dtn.service.domain.DTNJSONAdapter
 import com.heb.dtn.service.domain.account.OAuthToken
 import com.heb.dtn.service.internal.dtn.DinnerTonightAccountService
 import com.heb.dtn.service.internal.dtn.GigyaConfig
@@ -32,6 +34,8 @@ class DefaultDinnerTonightAccountServiceManager(private val context: Context, pr
             }
 
         this.gigyaServiceConfig.isAlwaysTrustHost = this.config.isAlwaysTrustHost
+        this.gigyaServiceConfig.decoders = mapOf(
+                Pair(HTTPService.MimeType.Json.value, JSONDecoder(arrayOf(DTNJSONAdapter()))))
     }
 
     override fun accountService(): AccountService = DinnerTonightAccountService(config = this.config)

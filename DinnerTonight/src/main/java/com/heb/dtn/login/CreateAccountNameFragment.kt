@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
 import com.heb.dtn.flow.core.BaseFormFlowDialogFragment
+import com.heb.dtn.service.api.AccountValidationFlags
 import com.heb.dtn.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.fragment_create_account_name.*
 
 /**
  * Fragment that allows the user to enter their first and last name and first screen in the create account flow.
  */
-class CreateAccountNameFragment : BaseFormFlowDialogFragment<Unit, CreateAccountNameFragment.Result>() {
+class CreateAccountNameFragment : BaseFormFlowDialogFragment<AccountValidationFlags, CreateAccountNameFragment.Result>() {
 
     data class Result(val firstName: String, val lastName: String = "")
 
@@ -38,7 +39,7 @@ class CreateAccountNameFragment : BaseFormFlowDialogFragment<Unit, CreateAccount
         this.nextButton.isEnabled = !this.firstNameEditText.text.isNullOrBlank() && !this.lastNameEditText.text.isNullOrBlank()
     }
 
-    override fun flowWillRun(args: Unit) {
+    override fun flowWillRun(args: AccountValidationFlags) {
         super.flowWillRun(args)
         KeyboardUtils.requestFocus(context, this.firstNameEditText)
     }

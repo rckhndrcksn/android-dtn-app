@@ -4,8 +4,8 @@ import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.foundation.service.HTTPService
 import com.heb.dtn.foundation.service.get
 import com.heb.dtn.service.api.ServerInfoService
-import com.heb.dtn.service.domain.ServerStatus
-import com.heb.dtn.service.domain.isUp
+import com.heb.dtn.service.domain.info.ServerStatus
+import com.heb.dtn.service.domain.info.isUp
 import com.inmotionsoftware.promise.Promise
 
 //

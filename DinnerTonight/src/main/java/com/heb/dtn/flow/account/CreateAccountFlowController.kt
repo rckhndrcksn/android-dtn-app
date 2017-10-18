@@ -5,13 +5,18 @@ import android.widget.Toast
 import com.heb.dtn.app.AppProxy
 import com.heb.dtn.extensions.hide
 import com.heb.dtn.flow.core.BaseFlowController
+import com.heb.dtn.foundation.extension.contains
+import com.heb.dtn.foundation.extension.remove
 import com.heb.dtn.foundation.promise.android.always
 import com.heb.dtn.foundation.promise.android.catch
+import com.heb.dtn.foundation.promise.android.recover
 import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.login.CreateAccountEmailFragment
 import com.heb.dtn.login.CreateAccountNameFragment
 import com.heb.dtn.login.CreateAccountPasswordFragment
 import com.heb.dtn.login.CreateAccountSuccessFragment
+import com.heb.dtn.service.api.AccountServiceError
+import com.heb.dtn.service.api.AccountValidationFlags
 import com.inmotionsoftware.imsflow.*
 
 //
@@ -34,11 +39,10 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
     }
 
     private object Registration {
-        var lastName: String = ""
         var firstName: String = ""
+        var lastName: String = ""
         var email: String = ""
         var password: String = ""
-        var promoOptIn: Boolean = false
     }
 
     private val nameFragment: CreateAccountNameFragment by lazy { CreateAccountNameFragment() }
@@ -46,6 +50,7 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
     private val passwordFragment: CreateAccountPasswordFragment by lazy { CreateAccountPasswordFragment() }
     private val successFragment: CreateAccountSuccessFragment by lazy { CreateAccountSuccessFragment() }
     private val form = Registration
+    private var validationFlags = AccountValidationFlags()
 
     init {
         this.initialize()
@@ -99,6 +104,7 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
     }
 
     override fun onStart(args: Unit) {
+        this.validationFlags.clear()
         this.transition(from = State.Begin, to = State.Name)
     }
 
@@ -107,34 +113,39 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
     //
 
     private fun onName(state: State, with: Any?) {
-        this.flow(dialogFragment = this.nameFragment, args = Unit)
+        this.flow(dialogFragment = this.nameFragment, args = this.validationFlags)
                 .back { this.transition(from = state, to = State.Cancel) }
                 .cancel { this.transition(from = state, to = State.Cancel) }
                 .complete { (firstName, lastName) ->
                     this.form.firstName = firstName
                     this.form.lastName = lastName
+
+                    this.validationFlags.remove(sets = listOf(AccountValidationFlags.firstName, AccountValidationFlags.lastName))
                     this.transition(from = state, to = State.Email)
                 }
                 .catch { this.transition(from= state, to = State.Fail, with = it) }
     }
 
     private fun onEmail(state: State, with: Any?) {
-        this.flow(dialogFragment = this.emailFragment, args = Unit)
+        this.flow(dialogFragment = this.emailFragment, args = this.validationFlags)
                 .back { this.transition(from = state, to = State.Name) }
                 .cancel { this.transition(from = state, to = State.Cancel) }
                 .complete { email ->
                     this.form.email = email
+
+                    this.validationFlags.remove(sets = listOf(AccountValidationFlags.email, AccountValidationFlags.emailInUse))
                     this.transition(from = state, to = State.Password)
                 }
                 .catch { this.transition(from= state, to = State.Fail, with = it) }
     }
 
     private fun onPassword(state: State, with: Any?) {
-        this.flow(dialogFragment = this.passwordFragment, args = Unit)
+        this.flow(dialogFragment = this.passwordFragment, args = this.validationFlags)
                 .back { this.transition(from = state, to = State.Email) }
                 .cancel { this.transition(from = state, to = State.Cancel) }
                 .complete { password ->
                     this.form.password = password
+                    this.validationFlags.remove(set = AccountValidationFlags.password)
                     this.transition(from = state, to = State.Submit)
                 }
                 .catch { this.transition(from= state, to = State.Fail, with = it) }
@@ -145,15 +156,35 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
         AppProxy.proxy.accountManager()
                 .createAccount(firstName = this.form.firstName, lastName = this.form.lastName, email = this.form.email, password = this.form.password)
                 .then {
-                    this.passwordFragment.dismiss()
+                    this.validationFlags.clear()
                     this.transition(from = state, to = State.Success, with = this.form.email)
                 }
+                .recover { error ->
+                    val accountError = error as? AccountServiceError ?: throw error
+                    when (accountError) {
+                        is AccountServiceError.Validation -> {
+                            this.validationFlags = accountError.flags
+                            if (this.validationFlags.contains(sets = listOf(AccountValidationFlags.firstName, AccountValidationFlags.lastName))) {
+                                this.transition(from = state, to = State.Name)
+                            } else if (this.validationFlags.contains(sets = listOf(AccountValidationFlags.email, AccountValidationFlags.emailInUse))) {
+                                this.transition(from = state, to = State.Email)
+                            } else if (this.validationFlags.contains(set = AccountValidationFlags.password)) {
+                                this.transition(from = state, to = State.Password)
+                            } else {
+                                throw accountError
+                            }
+                        }
+                        else -> throw accountError
+                    }
+                }
                 .catch {
-                    this.passwordFragment.dismiss()
                     Toast.makeText(this.context, it.localizedMessage, Toast.LENGTH_SHORT).show()
                     this.transition(from = state, to = State.Password)
                 }
-                .always { activityIndicator?.hide() }
+                .always {
+                    this.passwordFragment.dismiss()
+                    activityIndicator?.hide()
+                }
     }
 
     private fun onSuccess(state: State, email: String) {

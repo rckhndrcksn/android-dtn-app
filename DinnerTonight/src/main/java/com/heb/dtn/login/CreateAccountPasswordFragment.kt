@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
 import com.heb.dtn.flow.core.BaseFormFlowDialogFragment
+import com.heb.dtn.service.api.AccountValidationFlags
 import com.heb.dtn.utils.DTNURLSpan
 import com.heb.dtn.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.fragment_create_account_password.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_create_account_password.*
 /**
  * Fragment to allow the user to set a password for their account.
  */
-class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<Unit, String>() {
+class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<AccountValidationFlags, String>() {
 
     override val dialogTheme: Int = R.style.BaseCustomDialogFragment
 
@@ -46,7 +47,7 @@ class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<Unit, String>() 
         }
     }
 
-    override fun flowWillRun(args: Unit) {
+    override fun flowWillRun(args: AccountValidationFlags) {
         super.flowWillRun(args)
         KeyboardUtils.requestFocus(context, this.passwordEditText)
     }

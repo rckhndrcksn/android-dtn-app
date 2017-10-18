@@ -1,4 +1,4 @@
-package com.heb.dtn.service.domain
+package com.heb.dtn.service.domain.info
 
 //
 // Created by Khuong Huynh on 9/26/17.

@@ -1,4 +1,4 @@
-package com.heb.dtn.service.domain.profile
+package com.heb.dtn.service.domain.account
 
 //
 // Created by Khuong Huynh on 9/27/17.

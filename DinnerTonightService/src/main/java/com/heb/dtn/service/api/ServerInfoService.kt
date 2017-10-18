@@ -1,6 +1,6 @@
 package com.heb.dtn.service.api
 
-import com.heb.dtn.service.domain.ServerStatus
+import com.heb.dtn.service.domain.info.ServerStatus
 import com.inmotionsoftware.promise.Promise
 
 //

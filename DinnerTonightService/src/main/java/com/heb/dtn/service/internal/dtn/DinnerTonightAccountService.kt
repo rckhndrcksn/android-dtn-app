@@ -12,23 +12,6 @@ import com.inmotionsoftware.promise.Promise
 // Created by Maksim Orlovich on 10/11/17.
 //
 
-//http://35.202.209.115/api/v1/register
-// BODY:
-//{
-//    regToken: "",
-//    profile: {
-//        userId: "",
-//        firstName: "",
-//        lastName: "",
-//        email: ""
-//    }
-//}
-// RESP:
-//{
-//    "sessionSecret": ${secret},
-//    "sessionToken": ${token}
-//}
-
 private class Register(val regToken: String, val profile: Profile)
 
 class DinnerTonightAccountService(config: HTTPService.Config) : HTTPService(config = config), AccountService {
