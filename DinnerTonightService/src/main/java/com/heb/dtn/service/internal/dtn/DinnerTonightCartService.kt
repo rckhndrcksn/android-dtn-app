@@ -17,7 +17,7 @@ import com.inmotionsoftware.promise.Promise
 class DinnerTonightCartService(config: HTTPService.Config) : HTTPService(config = config), CartService {
 
     override fun createCart(): Promise<Cart>
-        = this.post(route = "api/v1/cart/new", body = UploadBody.Empty<Unit>(), type = Cart::class.java)
+        = this.post(route = "api/v1/cart/new", body = UploadBody.Empty(), type = Cart::class.java)
 
     override fun getCart(cartId: CartId): Promise<Cart>
         = this.get(route = "api/v1/cart/$cartId", type = Cart::class.java)
