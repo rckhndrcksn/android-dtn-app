@@ -20,6 +20,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <include layout="@layout/view_progress_spinner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:translationZ="5dp">
+
+            <Button
+                android:id="@+id/homeButtom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"/>
+
+            <Button
+                android:id="@+id/browseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Browse"/>
+
+            <Button
+                android:id="@+id/ordersButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Orders"/>
+
+            <Button
+                android:id="@+id/profileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"/>
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

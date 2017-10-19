@@ -122,7 +122,7 @@ abstract class RecyclerListViewFlowFragment<T, ARGS, RETURN> :
         , RecyclerList.RecyclerListControl<T>
         , RecyclerList<T> by RecyclerListImpl<T>(){
 
-    final override fun createView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    final override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
             =  this.createView(inflater, container, this)
 }
 

@@ -41,9 +41,9 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
 
     private val DEFAULT_RADIUS = AppProxy.proxy.resources.getDoubleFromString(R.string.default_radius)
 
-    override fun createView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val rootView = inflater?.inflate(R.layout.fragment_store_locator_map_list, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_store_locator_map_list, container, false)
 
         rootView?.setBackgroundColor(ContextCompat.getColor(this.activity, R.color.defaultBackground))
 
