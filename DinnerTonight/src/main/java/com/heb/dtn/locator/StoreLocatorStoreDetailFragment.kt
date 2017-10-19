@@ -49,9 +49,9 @@ class StoreLocatorStoreDetailFragment : StoreLocatorFragment<StoreDetailParams, 
         super.flowWillRun(args)
     }
 
-    override fun createView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val rootView = inflater?.inflate(R.layout.fragment_store_locator_store_details, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_store_locator_store_details, container, false)
         rootView?.setBackgroundColor(Color.WHITE)
         (rootView?.findViewById(R.id.mapView) as MapView).onCreate(savedInstanceState)
 

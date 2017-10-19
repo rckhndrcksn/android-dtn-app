@@ -36,19 +36,15 @@ abstract class BaseFlowFragment<ARGS, RETURN>
         this.setHasOptionsMenu(true)
     }
 
-    final override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val fragmentContainerView = inflater?.inflate(R.layout.fragment_base_flow_default, container, false) as ViewGroup
+    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val fragmentContainerView = inflater.inflate(R.layout.fragment_base_flow_default, container, false) as ViewGroup
         this.createView(inflater = inflater, container = container, savedInstanceState = savedInstanceState)?.let {
             fragmentContainerView.addView(it)
         }
         return fragmentContainerView
     }
 
-    abstract fun createView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+    abstract fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 
     override fun onPause() {
         KeyboardUtils.dismissKeyboard(this.activity)
