@@ -17,54 +17,46 @@ class Store {
             }
     }
 
-    var storeNumber: Long = 0
-    var name: String? = null
-    var address: String? = null
-    var address2: String? = null
-    var city: String? = null
-    var state: String? = null
-    var latitude: Double? = null
-    var longitude: Double? = null
+    var address: String
+    var city: String
+    var latitude: Double
+    var longitude: Double
+    var name: String
+    var phone: String
+    var state: String
+    var storeNumber: Int
+    var zip: String
 
-    internal var ID: String? = null
-    internal var zip: String? = null
-
-    var zipcode: String?
-        get() = this.zip
-        set(value) { this.zip = value }
+    init {
+        this.address = ""
+        this.city = ""
+        this.latitude = 0.0
+        this.longitude = 0.0
+        this.name = ""
+        this.phone = ""
+        this.state = ""
+        this.storeNumber = 0
+        this.zip = ""
+    }
 }
 
 /* Extensions */
-var Store.storeId: String?
-    get() = this.ID
-    set(value) { this.ID = value }
-
-val Store.streetAddress2: String?
+val Store.cityStateZip: String
     get(){
-        var str = ""
+        // City
+        var str = this.city
 
-        this.city?.let {
-            str += this.city
+        // State
+        if (str.isNotEmpty()) {
+            str += ", "
         }
+        str += this.state
 
-        this.state?.let {
-            if (str.isNotEmpty()) {
-                str += ", "
-            }
-
-            str += this.state
+        // Zipcode
+        if (str.isNotEmpty()) {
+            str += ", "
         }
-
-        this.zipcode?.let {
-            if (str.isNotEmpty()) {
-                str += ", "
-            }
-
-            str += this.zipcode
-        }
+        str += this.zip
 
         return str
     }
-
-val Store.mailingAddress: String?
-    get() = "${address ?: ""} ${address2 ?: ""}\n${city ?: ""} ${state ?: ""} ${zipcode ?: ""}"

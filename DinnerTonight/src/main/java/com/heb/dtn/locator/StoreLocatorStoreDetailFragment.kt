@@ -127,18 +127,16 @@ class StoreLocatorStoreDetailFragment : StoreLocatorFragment<StoreDetailParams, 
             }
         }
 
-        /*
         // Phone number check
-        if (storeItem.pharmacyPhone.isNotEmpty()) {
+        if (storeItem.storePhone.isNotEmpty()) {
             this.phoneContainer.show()
-            this.phoneNumber.text = storeItem.pharmacyPhone
+            this.phoneNumber.text = storeItem.storePhone
             this.phoneContainer.setOnClickListener {
                 val callIntent = Intent(Intent.ACTION_DIAL)
-                callIntent.data = Uri.parse("tel:${storeItem.pharmacyPhone}")
+                callIntent.data = Uri.parse("tel:${storeItem.storePhone}")
                 this.startActivity(callIntent)
             }
         }
-        */
 
         val buttonText = when(pharmacyDetailParams.option) {
             StoreLocatorOption.SELECT_STORE ->
