@@ -26,7 +26,7 @@ class KeyboardUtils {
         fun requestFocus(context: Context, editText: EditText) {
             editText.requestFocus()
             val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }
     }
 

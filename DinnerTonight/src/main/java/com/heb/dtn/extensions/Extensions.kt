@@ -2,9 +2,11 @@ package com.heb.dtn.extensions
 
 import android.content.Context
 import android.content.res.Resources
+import android.net.Uri
 import android.support.annotation.ColorRes
 import android.support.annotation.DimenRes
 import android.support.annotation.StringRes
+import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
@@ -107,4 +109,20 @@ fun Snackbar.action(@StringRes stringId: Int, @ColorRes colorId: Int = R.color.s
 fun Snackbar.action(text: String, @ColorRes colorId: Int = R.color.snackBarActionText, clickListener: (View) -> Unit) {
     this.setAction(text, clickListener)
     this.setActionTextColor(ContextCompat.getColor(AppProxy.proxy, colorId))
+}
+
+fun Context.launchUrl(url: String) {
+    val builder = CustomTabsIntent.Builder()
+    builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+    builder.setStartAnimations(this, R.anim.slide_in_from_right, R.anim.slide_out_to_left)
+    builder.setExitAnimations(this, R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    builder.setShowTitle(true)
+
+    val uri = if (url.endsWith(".PDF", true)) {
+        Uri.parse("http://docs.google.com/gview?embedded=true&url=$url")
+    } else {
+        Uri.parse(url)
+    }
+
+    builder.build().launchUrl(this, uri)
 }

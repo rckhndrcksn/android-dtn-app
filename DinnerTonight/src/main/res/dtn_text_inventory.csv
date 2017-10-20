@@ -1,28 +1,31 @@
 LineNum,Flow,Screen Name,ScreenID,Dev Key,Placeholder String,Final UX Text,Android Override,Notes
 2,Splash,Splash Screen,DTN2,LOGIN_BUTTON,LOGIN,LOGIN,,
 3,Splash,Splash Screen,DTN2,SIGN_UP_BUTTON,SIGN UP,SIGN UP,,
-4,Splash,Splash Screen,DTN2,GUEST_BUTTON,Continue as Guest,Continue as Guest,,
+4,Splash,Splash Screen,DTN2,GUEST_BUTTON,Continue as guest,Continue as guest,,
 5,Login,LoginA,DTN3,LOGIN_TITLE,Login,Login,,
-6,Login,LoginA,DTN3,USERNAME_HINT,Username,Username,,
+6,Login,LoginA,DTN3,USERNAME_HINT,Email address,Email address,,
 7,Login,LoginA,DTN3,PASSWORD_HINT,Password,Password,,
 8,Login,LoginA,DTN3,FORGOT_PW,Forgot,Forgot,,
 9,Login,LoginFail,DTN5,LOGIN_ERROR_TITLE,Login not recognized,Login not recognized,,
-10,Login,LoginFail,DTN5,LOGIN_ERROR_MSG,The email and password provided did not match our records.,The email and password provided did not match our records.,,
+10,Login,LoginFail,DTN5,LOGIN_ERROR_MSG,The email and password provided did not match our records.,The email and password provided did not match our records.,,Violates security policy; cannot reveal its not in database. To Review.
 11,Login,LoginFail,DTN5,OK_BUTTON,OK,OK,,
 12,Login,ForgotPWord,DTN6,FORGOT_PW_TITLE,Forgot password,Forgot password,,
-13,Login,ForgotPWord,DTN6,EMAIL_ADDR_HINT,Email Address,Email Address,,Address should not be cap
+13,Login,ForgotPWord,DTN6,EMAIL_ADDR_HINT,Email address,Email address,,Address should not be cap
 15,Login,ForgotPWord,DTN6,RESET_PW_BUTTON,RESET PASSWORD,RESET PASSWORD,,
-16,Login,PasswordSent,DTN7,PW_SENT_TITLE,Password Sent,Password Sent,,
+16,Login,PasswordSent,DTN7,PW_SENT_TITLE,Password sent,Password sent,,
 17,Login,PasswordSent,DTN7,PW_SENT_MSG,We have sent you an email with a password reset link.,We have sent you an email with a password reset link.,,
 18,Login,PasswordSent,DTN7,PW_SENT_TO,"""Email of user""",@%,%1$s,needs override
 19,CreateAccount,CreateAnAccountA,DTN8,CREATE_ACCT_TITLE,Create an account,Create an account,,
-20,CreateAccount,CreateAnAccountA,DTN8,FIRST_NAME_HINT,First Name,First Name,,
-21,CreateAccount,CreateAnAccountA,DTN8,LAST_NAME_HINT,Last Name,Last Name,,
+20,CreateAccount,CreateAnAccountA,DTN8,FIRST_NAME_HINT,First name,First name,,
+21,CreateAccount,CreateAnAccountA,DTN8,LAST_NAME_HINT,Last name,Last name,,
 22,CreateAccount,CreateAnAccountA,DTN8,NEXT_BUTTON,NEXT,NEXT,,
-23,CreateAccount,CreateAnAccountB,DTN9,ACCT_PROMO_MSG,"Get alerts about new promotions, exclusive offer, instore events and ways you can save at H-E-B","Get alerts about new promotions, exclusive offer, instore events and ways you can save at H-E-B",,
-24,CreateAccount,CreateAnAccountF,DTN10,PW_REQUIREMENTS,Passwords require 8 characters and one number,Passwords require 8 characters and one number,,
-25,CreateAccount,CreateAnAccountF,DTN10,TPP_TITLE,"By signing up, you agree to our Terms & Privacy Policy","By signing up, you agree to our Terms \u0026 Privacy Policy",,
-26,CreateAccount,CreateAnAccountG,,ACCT_CREATED_MESSAGE,Thank you for creating a new account. Your login email address is:,Thank you for creating a new account. Your login email address is:,,
+23,CreateAccount,CreateAnAccountB,DTN9,ACCT_PROMO_MSG,"Get alerts about new promotions, exclusive offer, instore events and ways you can save at H-E-B.","Get alerts about new promotions, exclusive offer, instore events and ways you can save at H-E-B.",,make sure H-E-B is handled as a word. can't break it
+24,CreateAccount,CreateAnAccountF,DTN10,SUBMIT_BUTTON,SUBMIT,SUBMIT,,
+25,CreateAccount,CreateAnAccountF,DTN10,PW_REQUIREMENTS,Passwords require 8 characters and one number,Passwords require 8 characters and one number,,
+26,CreateAccount,CreateAnAccountF,DTN10,TPP_TITLE,"By signing up, you agree to our Terms & Privacy Policy","By signing up, you agree to our Terms & Privacy Policy","By signing up, you agree to our Terms \u0026 Privacy Policy",
+27,CreateAccount,CreateAnAccountF,DTN10,TPP_LINK,Terms & Privacy Policy,Terms & Privacy Policy,Terms \u0026 Privacy Policy,link to HEB TPP: https://www.heb.com/static-page/article-template/privacy-policy
+28,CreateAccount,CreateAnAccountG,DTN11,ACCT_CREATED_MESSAGE,Thank you for creating a new account. Your login email address is:,Thank you for creating a new account. Your login email address is:,,
+29,CreateAccount,CreateAnAccountG,DTN11,ACCT_CREATED_TITLE,Account created,Account created,,
 666,,,,comment,,ALL STRINGS BELOW ARE CARRY OVER FROM PHARMACY,,,
 1,,ACTION,ACTION,ACTION_CONTINUE,ACTION_CONTINUE,,Next,Next,,,,,,,
 254,,Refill Contact Doctor,Contact my doctor?,ACTION_NOT_NOW,btn_not_now,btn_not_now,Not now,Not now,,,,,,,

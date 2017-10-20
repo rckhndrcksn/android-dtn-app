@@ -21,8 +21,8 @@
     </style>
 
     <style name="LoginCreateDialogAnimations">
-        <item name="android:windowEnterAnimation">@anim/slide_in_from_right</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_to_left</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
     </style>
 
     <style name="BaseCustomDialogFragment" parent="Theme.AppCompat.Light.Dialog">
@@ -110,14 +110,7 @@
     <style name="CreateAccountNextButton.CreatePassword">
         <item name="android:layout_marginTop">26dp</item>
         <item name="android:layout_marginBottom">0dp</item>
-    </style>
-
-    <style name="CreateAccountNextButton.CreateComplete">
-        <item name="android:layout_marginTop">34dp</item>
-        <item name="android:text">@string/login_button</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="fillColor">?attr/colorButtonNormal</item>
-        <item name="android:enabled">true</item>
+        <item name="android:text">@string/submit_button</item>
     </style>
 
     <style name="LoginErrorStyle" parent="BaseCustomDialogFragment">

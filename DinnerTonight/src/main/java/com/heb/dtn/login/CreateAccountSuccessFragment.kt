@@ -21,7 +21,7 @@ class CreateAccountSuccessFragment: BaseFlowDialogFragment<String, Unit>() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.login.setOnClickListener {
+        this.okButton.setOnClickListener {
             this.finish(result = Unit)
         }
     }

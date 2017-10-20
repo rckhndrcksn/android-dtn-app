@@ -1,12 +1,18 @@
 package com.heb.dtn.login
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
 import com.heb.dtn.flow.core.BaseFormFlowDialogFragment
+import com.heb.dtn.utils.DTNURLSpan
+import com.heb.dtn.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.fragment_create_account_password.*
 
 /**
@@ -23,17 +29,35 @@ class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<Unit, String>() 
         super.onViewCreated(view, savedInstanceState)
 
         this.passwordEditText.addTextChangedListener(this)
-
-        this.nextButton.setOnClickListener {
+        this.submitButton.setOnClickListener {
             this.finish(result = this.passwordEditText.text.toString())
         }
-        this.nextButton.isEnabled = false
+
+        val tppLink = getString(R.string.tpp_link)
+        val tppTitle = getString(R.string.tpp_title)
+        val startIndex = tppTitle.indexOf(tppLink)
+
+        if (startIndex != -1) {
+            this.tppTextView.movementMethod = LinkMovementMethod.getInstance()
+            val ss = SpannableString(tppTitle)
+            val span = DTNURLSpan("https://www.heb.com/static-page/article-template/privacy-policy", Color.BLACK)
+            ss.setSpan(span, startIndex, startIndex + tppLink.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            this.tppTextView.text = ss
+        }
+    }
+
+    override fun flowWillRun(args: Unit) {
+        super.flowWillRun(args)
+        KeyboardUtils.requestFocus(context, this.passwordEditText)
     }
 
     override fun afterTextChanged(s: Editable?) {
-        this.nextButton.isEnabled = !this.passwordEditText.text.isNullOrBlank()
-                                    && this.passwordEditText.text.length >= 8
-                                    && this.passwordEditText.text.contains(Regex("\\d"))
+        val input = this.passwordEditText.text
+        this.submitButton.isEnabled = !input.isNullOrBlank()
     }
 
+    override fun onPause() {
+        KeyboardUtils.dismissKeyboard(this.context, this.submitButton)
+        super.onPause()
+    }
 }

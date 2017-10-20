@@ -26,10 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/create_account_edit_text_size"
+        android:gravity="center_horizontal"
         android:textColor="?android:attr/textColorPrimary"/>
 
     <com.heb.dtn.widget.DTNRoundedButton
-        android:id="@+id/login"
-        style="@style/CreateAccountNextButton.CreateComplete" />
+        android:id="@+id/okButton"
+        style="@style/OKButton" />
 
 </LinearLayout>

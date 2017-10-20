@@ -122,9 +122,8 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
         this.flow(dialogFragment = this.emailFragment, args = Unit)
                 .back { this.transition(from = state, to = State.Name) }
                 .cancel { this.transition(from = state, to = State.Cancel) }
-                .complete { (email, promoOptIn) ->
+                .complete { email ->
                     this.form.email = email
-                    this.form.promoOptIn = promoOptIn
                     this.transition(from = state, to = State.Password)
                 }
                 .catch { this.transition(from= state, to = State.Fail, with = it) }

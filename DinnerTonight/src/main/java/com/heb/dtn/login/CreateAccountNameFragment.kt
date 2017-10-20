@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.heb.dtn.R
 import com.heb.dtn.flow.core.BaseFormFlowDialogFragment
+import com.heb.dtn.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.fragment_create_account_name.*
 
 /**
@@ -28,13 +29,18 @@ class CreateAccountNameFragment : BaseFormFlowDialogFragment<Unit, CreateAccount
         this.lastNameEditText.addTextChangedListener(this)
 
         this.nextButton.setOnClickListener {
+            KeyboardUtils.dismissKeyboard(context, this.nextButton)
             this.finish(result = Result(firstName = this.firstNameEditText.text.toString(), lastName = this.lastNameEditText.text.toString()))
         }
-        this.nextButton.isEnabled = false
     }
 
     override fun afterTextChanged(s: Editable?) {
         this.nextButton.isEnabled = !this.firstNameEditText.text.isNullOrBlank() && !this.lastNameEditText.text.isNullOrBlank()
+    }
+
+    override fun flowWillRun(args: Unit) {
+        super.flowWillRun(args)
+        KeyboardUtils.requestFocus(context, this.firstNameEditText)
     }
 
     override fun finish(result: Result) {
@@ -42,4 +48,8 @@ class CreateAccountNameFragment : BaseFormFlowDialogFragment<Unit, CreateAccount
         super.finish(result = result)
     }
 
+    override fun onPause() {
+        KeyboardUtils.dismissKeyboard(this.context, this.nextButton)
+        super.onPause()
+    }
 }
