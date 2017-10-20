@@ -26,4 +26,8 @@ class CreateAccountSuccessFragment: BaseFlowDialogFragment<String, Unit>() {
         }
     }
 
+    override fun flowWillRun(args: String) {
+        super.flowWillRun(args)
+        this.emailTextView.text = args
+    }
 }
