@@ -17,7 +17,7 @@ class AppFlow {
 
     // App
 
-    fun appLanding(context: AppCompatActivity, fragmentContainerView: Int): FlowPromise<AppLandingFlowController.Result>
+    fun appLanding(context: AppCompatActivity, fragmentContainerView: Int): FlowPromise<Unit>
             = AppLandingFlowController(context = context, fragmentContainerView = fragmentContainerView).start()
 
     // Account

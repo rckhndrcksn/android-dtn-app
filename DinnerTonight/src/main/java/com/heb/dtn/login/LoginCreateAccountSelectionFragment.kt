@@ -4,10 +4,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import com.heb.dtn.R
 import com.inmotionsoftware.imsflow.FlowDialogFragment
 import kotlinx.android.synthetic.main.fragment_login_create_account_selection.view.*
@@ -38,6 +35,7 @@ class LoginCreateAccountSelectionFragment : FlowDialogFragment<Unit, LoginCreate
         view.loginButton.setOnClickListener(listener)
         view.createAccountButton.setOnClickListener(listener)
         view.continueAsGuestButton.setOnClickListener(listener)
+        isCancelable = false
         return view
     }
 
@@ -46,13 +44,6 @@ class LoginCreateAccountSelectionFragment : FlowDialogFragment<Unit, LoginCreate
         dialog.setCanceledOnTouchOutside(false)
         dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         return dialog
-    }
-
-    override fun onCancel(dialog: DialogInterface?) {
-        super.onCancel(dialog)
-
-        // Treat swipe down/cancel action to continue as guest
-        this.finish(result = Result.AsGuest())
     }
 
     override fun finish(result: Result) {

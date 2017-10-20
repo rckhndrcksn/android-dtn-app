@@ -12,12 +12,7 @@ import com.inmotionsoftware.imsflow.*
 //
 
 class AppLandingFlowController(private val context: AppCompatActivity, private val fragmentContainerView: Int)
-    : BaseFlowController<AppLandingFlowController.State, Unit, AppLandingFlowController.Result>(context = context, fragmentContainerView = fragmentContainerView) {
-
-    sealed class Result {
-        class Authenticated: Result()
-        class AsGuest: Result()
-    }
+    : BaseFlowController<AppLandingFlowController.State, Unit, Unit>(context = context, fragmentContainerView = fragmentContainerView) {
 
     enum class State : FlowState {
         Begin
@@ -27,6 +22,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
 
         , Done
         , Fail
+        , Back
     }
 
     private val selectionFragment: LoginCreateAccountSelectionFragment by lazy { LoginCreateAccountSelectionFragment() }
@@ -41,6 +37,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
                 // screen states
                 .add(from = State.Begin, to = State.PromptSelection)
                 .add(from = State.PromptSelection, to = State.Login)
+                .add(from = State.PromptSelection, to = State.Back)
                 .add(from = State.PromptSelection, to = State.SignUp)
 
                 .add(from = State.Login, to = State.Done)
@@ -54,6 +51,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
                 .on(state = State.PromptSelection, execute = this::onPromptSelection)
                 .on(state = State.Login, execute = this::onLogin)
                 .on(state = State.SignUp, execute = this::onSignUp)
+                .on(state = State.Back, execute = this::onBack)
                 .onType(state = State.Done, execute = this::onDone)
                 .onType(state = State.Fail, execute = this::onFail)
     }
@@ -68,8 +66,8 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
 
     private fun onPromptSelection(state: State, with: Any?) {
         this.flow(dialogFragment = this.selectionFragment, args = Unit)
-            .back { this.transition(from = state, to = State.Done, with = Result.AsGuest() ) }
-            .cancel { this.transition(from = state, to = State.Done, with = Result.AsGuest() ) }
+            .back { this.transition(from = state, to = State.Back, with = Unit) }
+            .cancel { this.transition(from = state, to = State.Back, with = Unit) }
             .complete { result ->
                 when (result) {
                     is LoginCreateAccountSelectionFragment.Result.Login -> {
@@ -79,7 +77,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
                         this.transition(from = state, to = State.SignUp)
                     }
                     is LoginCreateAccountSelectionFragment.Result.AsGuest -> {
-                        this.transition(from = state, to = State.Done, with = Result.AsGuest())
+                        this.transition(from = state, to = State.Done)
                     }
                 }
             }
@@ -98,12 +96,12 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
         AppProxy.proxy.flow.createAccount(context = this.context, fragmentContainerView = this.fragmentContainerView)
                 .back { this.transition(from = state, to = State.PromptSelection) }
                 .cancel { this.transition(from = state, to = State.PromptSelection) }
-                .complete { this.transition(from = state, to = State.Done, with = Result.Authenticated()) }
+                .complete { this.transition(from = state, to = State.Done) }
                 .catch { this.transition(from = state, to = State.Fail) }
     }
 
-    private fun onDone(state: State, result: Result) {
-        this.finish(result = result)
+    private fun onDone(state: State, result: Any?) {
+        this.finish(result = Unit)
     }
 
 }

@@ -7,7 +7,6 @@ import android.text.format.DateUtils
 import android.widget.ProgressBar
 import com.heb.dtn.app.AppProxy
 import com.heb.dtn.extensions.hide
-import com.heb.dtn.flow.app.AppLandingFlowController
 import com.heb.dtn.utils.UIControlDelegate
 import com.heb.dtn.utils.UIControlDelegation
 import com.inmotionsoftware.imsflow.*
@@ -15,7 +14,7 @@ import com.inmotionsoftware.imsflow.*
 class AppLandingActivity : FlowActivity(),  UIControlDelegate by UIControlDelegation() {
 
     private val delayInterval: Long = DateUtils.SECOND_IN_MILLIS * 2    // 2 secs
-    private var flow: FlowPromise<AppLandingFlowController.Result>? = null
+    private var flow: FlowPromise<Unit>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +26,7 @@ class AppLandingActivity : FlowActivity(),  UIControlDelegate by UIControlDelega
     }
 
     override fun onStartFlow() {
+        if (this.flow != null) return
         val activityIndicator = this.showActivityIndicator()
         Handler().postDelayed({
             activityIndicator?.hide()
@@ -35,7 +35,6 @@ class AppLandingActivity : FlowActivity(),  UIControlDelegate by UIControlDelega
     }
 
     private fun startFlow() {
-        if (this.flow != null) return
         this.flow = AppProxy.proxy.flow.appLanding(context = this, fragmentContainerView = R.id.fragmentContainer)
         this.flow!!.back { this.finishFlow() }
                 .cancel { this.finishFlow() }
