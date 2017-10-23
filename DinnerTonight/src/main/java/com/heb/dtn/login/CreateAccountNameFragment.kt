@@ -1,6 +1,7 @@
 package com.heb.dtn.login
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +31,7 @@ class CreateAccountNameFragment : BaseFormFlowDialogFragment<AccountValidationFl
         this.lastNameEditText.addTextChangedListener(this)
 
         this.nextButton.setOnClickListener {
-            KeyboardUtils.dismissKeyboard(context, this.nextButton)
+            KeyboardUtils.dismissKeyboard(context = this.context, view = this.nextButton)
             this.finish(result = Result(firstName = this.firstNameEditText.text.toString(), lastName = this.lastNameEditText.text.toString()))
         }
     }
@@ -41,16 +42,17 @@ class CreateAccountNameFragment : BaseFormFlowDialogFragment<AccountValidationFl
 
     override fun flowWillRun(args: AccountValidationFlags) {
         super.flowWillRun(args)
-        KeyboardUtils.requestFocus(context, this.firstNameEditText)
+        KeyboardUtils.requestFocus(context = this.context, editText = this.firstNameEditText, delayMillis = KeyboardUtils.defaultDelayMillis)
     }
 
     override fun finish(result: Result) {
+        KeyboardUtils.dismissKeyboard(context = this.context, view = this.nextButton)
         this.dismiss()
         super.finish(result = result)
     }
 
     override fun onPause() {
-        KeyboardUtils.dismissKeyboard(this.context, this.nextButton)
+        KeyboardUtils.dismissKeyboard(context = this.context, view = this.nextButton)
         super.onPause()
     }
 }

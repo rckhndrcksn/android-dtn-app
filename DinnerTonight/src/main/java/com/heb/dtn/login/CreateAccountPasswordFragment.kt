@@ -31,6 +31,8 @@ class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<AccountValidatio
 
         this.passwordEditText.addTextChangedListener(this)
         this.submitButton.setOnClickListener {
+            KeyboardUtils.dismissKeyboard(context = this.context, view = this.submitButton)
+            it.isEnabled = false
             this.finish(result = this.passwordEditText.text.toString())
         }
 
@@ -49,7 +51,7 @@ class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<AccountValidatio
 
     override fun flowWillRun(args: AccountValidationFlags) {
         super.flowWillRun(args)
-        KeyboardUtils.requestFocus(context, this.passwordEditText)
+        KeyboardUtils.requestFocus(context = this.context, editText = this.passwordEditText, delayMillis = KeyboardUtils.defaultDelayMillis)
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -58,7 +60,7 @@ class CreateAccountPasswordFragment: BaseFormFlowDialogFragment<AccountValidatio
     }
 
     override fun onPause() {
-        KeyboardUtils.dismissKeyboard(this.context, this.submitButton)
+        KeyboardUtils.dismissKeyboard(context = this.context, view = this.submitButton)
         super.onPause()
     }
 }

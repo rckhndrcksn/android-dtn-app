@@ -1,7 +1,7 @@
 package com.heb.dtn.flow.account
 
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
+import com.heb.dtn.R
 import com.heb.dtn.app.AppProxy
 import com.heb.dtn.extensions.hide
 import com.heb.dtn.flow.core.BaseFlowController
@@ -32,6 +32,7 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
         , Password
         , Submit
         , Success
+        , ShowError
         , Fail
         , Done
         , Cancel
@@ -73,18 +74,17 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
                 .add(from = State.Password, to = State.Email)
 
                 // submit form
-                .add(from = State.Submit, to = State.Password)
+                .add(from = State.Submit, to = State.ShowError)
+                .add(from = State.Submit, to = State.Success)
                 .add(from = State.Submit, to = State.Fail)
                 .add(from = State.Submit, to = State.Done)
-                .add(from = State.Submit, to = State.Success)
+
+                .add(from = State.ShowError, to = State.Name)
+                .add(from = State.ShowError, to = State.Email)
+                .add(from = State.ShowError, to = State.Password)
 
                 // success
                 .add(from = State.Success, to = State.Done)
-
-                // recoverable error states
-                .add(from = State.Submit, to = State.Name)
-                .add(from = State.Submit, to = State.Email)
-                .add(from = State.Submit, to = State.Password)
 
                 .addFromAny(State.Cancel)
                 .addFromAny(State.Fail)
@@ -97,6 +97,7 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
                 .on(state = State.Password, execute = this::onPassword)
                 .on(state = State.Submit, execute = this::onSubmit)
                 .onType(state = State.Success, execute = this::onSuccess)
+                .on(state = State.ShowError, execute = this::onShowError)
                 .on(state = State.Done, execute = this::onDone)
                 .onType(state = State.Fail, execute = this::onFail)
                 .on(state = State.Cancel, execute = this::onCancel)
@@ -152,6 +153,7 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
     }
 
     private fun onSubmit(state: State, with: Any?) {
+        this.passwordFragment.dismiss()
         val activityIndicator = this.showActivityIndicator()
         AppProxy.proxy.accountManager()
                 .createAccount(firstName = this.form.firstName, lastName = this.form.lastName, email = this.form.email, password = this.form.password)
@@ -164,27 +166,13 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
                     when (accountError) {
                         is AccountServiceError.Validation -> {
                             this.validationFlags = accountError.flags
-                            if (this.validationFlags.contains(sets = listOf(AccountValidationFlags.firstName, AccountValidationFlags.lastName))) {
-                                this.transition(from = state, to = State.Name)
-                            } else if (this.validationFlags.contains(sets = listOf(AccountValidationFlags.email, AccountValidationFlags.emailInUse))) {
-                                this.transition(from = state, to = State.Email)
-                            } else if (this.validationFlags.contains(set = AccountValidationFlags.password)) {
-                                this.transition(from = state, to = State.Password)
-                            } else {
-                                throw accountError
-                            }
+                            this.transition(from = state, to = State.ShowError)
                         }
                         else -> throw accountError
                     }
                 }
-                .catch {
-                    Toast.makeText(this.context, it.localizedMessage, Toast.LENGTH_SHORT).show()
-                    this.transition(from = state, to = State.Password)
-                }
-                .always {
-                    this.passwordFragment.dismiss()
-                    activityIndicator?.hide()
-                }
+                .catch { this.transition(from = state, to = State.ShowError) }
+                .always { activityIndicator?.hide() }
     }
 
     private fun onSuccess(state: State, email: String) {
@@ -194,6 +182,33 @@ class CreateAccountFlowController(private val context: AppCompatActivity, privat
                 .complete { this.transition(from = state, to = State.Done)  }
                 .catch { this.transition(from= state, to = State.Fail, with = it) }
     }
+
+    private fun onShowError(state: State, args: Any?) {
+        this.showDialog(style = R.style.LoginErrorStyle, title = "Error"
+                        , message = this.errorMessage(validationFlags = this.validationFlags)
+                        , action = this.getString(R.string.ok_button))
+            .then {
+                when {
+                    this.validationFlags.contains(sets = listOf(AccountValidationFlags.firstName, AccountValidationFlags.lastName)) ->
+                        this.transition(from = state, to = State.Name)
+                    this.validationFlags.contains(sets = listOf(AccountValidationFlags.email, AccountValidationFlags.emailInUse)) ->
+                        this.transition(from = state, to = State.Email)
+                    this.validationFlags.contains(set = AccountValidationFlags.password) ->
+                        this.transition(from = state, to = State.Password)
+                    else -> this.transition(from = state, to = State.Name)
+                }
+            }
+    }
+
+    private fun errorMessage(validationFlags: AccountValidationFlags): String
+        // TODO: (JC) Add the strings below to the text inventory
+        = when {
+            validationFlags.contains(sets = listOf(AccountValidationFlags.firstName, AccountValidationFlags.lastName)) -> "The name you entered is invalid format."
+            validationFlags.contains(set = AccountValidationFlags.emailInUse) -> "The email you entered already exist."
+            validationFlags.contains(set = AccountValidationFlags.email) -> "Invalid email address."
+            validationFlags.contains(set = AccountValidationFlags.password) -> "Invalid password format."
+            else -> "Something went wrong. Please try again."
+        }
 
     private fun onDone(state: State, args: Any?) {
         this.finish(true)

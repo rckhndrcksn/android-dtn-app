@@ -1,7 +1,9 @@
 package com.heb.dtn.login
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,17 +41,19 @@ class CreateAccountEmailFragment : BaseFormFlowDialogFragment<AccountValidationF
     }
 
     override fun finish(result: String) {
+        KeyboardUtils.dismissKeyboard(context = this.context, view = this.nextButton)
         this.dismiss()
         super.finish(result = result)
     }
 
     override fun flowWillRun(args: AccountValidationFlags) {
         super.flowWillRun(args)
-        KeyboardUtils.requestFocus(context, this.emailEditText)
+        KeyboardUtils.requestFocus(context = this.context, editText = this.emailEditText, delayMillis = KeyboardUtils.defaultDelayMillis)
     }
 
     override fun onPause() {
-        KeyboardUtils.dismissKeyboard(this.context, this.nextButton)
+        KeyboardUtils.dismissKeyboard(context = this.context, view = this.nextButton)
         super.onPause()
     }
+
 }

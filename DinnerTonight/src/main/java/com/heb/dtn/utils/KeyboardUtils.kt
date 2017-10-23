@@ -6,6 +6,7 @@ package com.heb.dtn.utils;
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -13,6 +14,8 @@ import android.widget.EditText
 class KeyboardUtils {
 
     companion object {
+        val defaultDelayMillis: Long = 350
+
         fun dismissKeyboard(activity: Activity) {
             val view = activity.currentFocus ?: View(activity)
             KeyboardUtils.dismissKeyboard(context = activity, view = view)
@@ -23,10 +26,20 @@ class KeyboardUtils {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        fun requestFocus(context: Context, editText: EditText) {
-            editText.requestFocus()
-            val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        fun requestFocus(context: Context, editText: EditText, delayMillis: Long? = null) {
+            val requestFocus = {
+                editText.requestFocus()
+                val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+            }
+
+            if (delayMillis == null) {
+                requestFocus()
+            } else {
+                Handler().postDelayed({
+                    requestFocus()
+                }, delayMillis)
+            }
         }
     }
 

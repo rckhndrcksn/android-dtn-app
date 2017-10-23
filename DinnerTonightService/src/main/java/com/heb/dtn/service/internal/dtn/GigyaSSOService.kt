@@ -145,6 +145,11 @@ class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config)
 
                         when (gigyaError.response.errorCode) {
                             Gigya.Error.Code.UniqueIdentifierExists -> validationFlags.formUnion(AccountValidationFlags.emailInUse)
+                            Gigya.Error.Code.InvalidParameterValue -> {
+                                if (gigyaError.response.errorDetails.endsWith(": Invalid email", ignoreCase = true)) {
+                                    validationFlags.formUnion(AccountValidationFlags.email)
+                                }
+                            }
                             else -> { }
                         }
 

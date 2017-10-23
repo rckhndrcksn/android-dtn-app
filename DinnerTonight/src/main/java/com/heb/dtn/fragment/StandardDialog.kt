@@ -42,6 +42,10 @@ class StandardDialog : DTNBaseDialogFragment() {
             layout.contentPanel.visibility = View.GONE
         }
 
+        titleString?.let {
+            layout.title.text = it
+        }
+
         messageString?.let {
             layout.message.text = messageString
             layout.customPanel.visibility = View.GONE
@@ -61,8 +65,13 @@ class StandardDialog : DTNBaseDialogFragment() {
             layout.negativeButton.visibility = View.VISIBLE
         }
 
-        layout.positiveButton.setOnClickListener { this.positiveButtonListener }
-        layout.negativeButton.setOnClickListener { this.negativeButtonListener }
+        this.positiveButtonListener?.let {
+            layout.positiveButton.setOnClickListener(it)
+        }
+
+        this.negativeButtonListener?.let {
+            layout.negativeButton.setOnClickListener(it)
+        }
 
         return layout
     }
@@ -76,7 +85,7 @@ class StandardDialog : DTNBaseDialogFragment() {
             this.fragment = StandardDialog()
         }
 
-        constructor(context: Context, @StyleRes style: Int) {
+        constructor(context: Context, style: Int) {
             this.context = context
             this.fragment = StandardDialog()
             this.fragment.dialogTheme = style
@@ -89,7 +98,7 @@ class StandardDialog : DTNBaseDialogFragment() {
             return this
         }
 
-        fun setMessageResId(@StringRes resId: Int):Builder = setMessage(context.getString(resId))
+        fun setMessageResId(resId: Int):Builder = setMessage(context.getString(resId))
 
         fun setMessage(message: String):Builder {
             this.fragment.messageString = message
@@ -108,7 +117,7 @@ class StandardDialog : DTNBaseDialogFragment() {
             return this
         }
 
-        fun setPositiveButton(@StringRes buttonTextResId: Int, listener: View.OnClickListener):Builder =
+        fun setPositiveButton(buttonTextResId: Int, listener: View.OnClickListener):Builder =
                 setPositiveButton(context.getString(buttonTextResId), listener)
 
         fun setPositiveButton(buttonText: String, listener: View.OnClickListener):Builder {
@@ -117,7 +126,7 @@ class StandardDialog : DTNBaseDialogFragment() {
             return this
         }
 
-        fun setNegativeButton(@StringRes buttonTextResId: Int, listener: View.OnClickListener):Builder =
+        fun setNegativeButton(buttonTextResId: Int, listener: View.OnClickListener):Builder =
                 setNegativeButton(context.getString(buttonTextResId), listener)
 
         fun setNegativeButton(buttonText: String, listener: View.OnClickListener):Builder {

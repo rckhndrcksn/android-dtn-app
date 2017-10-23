@@ -1,8 +1,10 @@
 package com.heb.dtn.utils
 
+import android.content.Context
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import com.heb.dtn.R
@@ -22,6 +24,7 @@ interface UIControlDelegate {
     fun showActivityIndicator(): ProgressBar?
     fun showDialog(title: String? = null, message: String? = null, attributedMessage: String? = null, actions: Array<String>? = null, preferredActionIndex: Int? = null): Promise<Int>
     fun showDialog(@LayoutRes layoutId: Int, onInitCustomView: OnInitCustomView, actions: Array<String>? = null, preferredActionIndex: Int? = null): Promise<Int>
+    fun showDialog(style: Int, title: String? = null, message: String, action: String): Promise<Unit>
     fun showErrorScreen(error: Throwable)
     fun showErrorDialog(error: Throwable?): Promise<Unit>
 }
@@ -59,6 +62,26 @@ open class UIControlDelegation : UIControlDelegate {
                     , preferredActionIndex = preferredActionIndex ?: 0
             )
             this.showAndResolveDialog(dialog, resolve)
+        }
+    }
+
+    override fun showDialog(style: Int, title: String?, message: String, action: String): Promise<Unit> {
+        return Promise<Unit> { resolve, reject ->
+            val context = this.controlActivity
+            if (context == null) {
+                reject(IllegalStateException("Context is null."))
+            } else {
+                var dialog: com.heb.dtn.fragment.StandardDialog? = null
+                dialog = com.heb.dtn.fragment.StandardDialog.Builder(context, style)
+                        .setTitle(title ?: "")
+                        .setMessage(message)
+                        .setPositiveButton(action, View.OnClickListener {
+                            resolve(Unit)
+                            dialog?.dismiss()
+                        }).build()
+                dialog.isCancelable = false
+                dialog.show(context.supportFragmentManager, DIALOG_FRAGMENT_TAG)
+            }
         }
     }
 
