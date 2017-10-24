@@ -634,16 +634,5 @@ internal class Gigya private constructor () {
             var verified: Date?, // The time when the isVerified parameter was set to true in ISO 8601 format, e.g., "1997-07-16T19:20:30Z".
             var verifiedTimestamp: Long? // The GMT time when the isVerified parameter was set to true in Unix time format including milliseconds (i.e., the number of seconds since Jan. 1st 1970 * 1000).
         )
-
-        class GetJWTRequest(
-            override var apiKey: String,
-            override var userKey: String,
-            override var secret: String
-        ): BaseRequest(), Auth
-
-        class GetJWTResponse(
-            var ignoredFields: List<String>?,
-            var id_token: String
-        )
     }
 }
