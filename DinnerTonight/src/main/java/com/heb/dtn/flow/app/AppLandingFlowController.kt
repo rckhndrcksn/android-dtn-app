@@ -88,7 +88,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
         AppProxy.proxy.flow.login(context = this.context, fragmentContainerView = this.fragmentContainerView)
                 .back { this.transition(from = state, to = State.PromptSelection) }
                 .cancel { this.transition(from = state, to = State.PromptSelection) }
-                .complete { this.transition(from = state, to = State.Done, with = Result.Authenticated()) }
+                .complete { this.transition(from = state, to = State.Done) }
                 .catch { this.transition(from = state, to = State.Fail) }
     }
 

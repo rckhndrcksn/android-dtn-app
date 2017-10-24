@@ -484,8 +484,8 @@ internal class Gigya private constructor () {
         }
 
         class SessionInfo(
-            var cookieName: String,
-            var cookieValue: String)
+            var sessionToken: String,
+            var sessionSecret: String)
 
         class ResetPasswordRequest(
             override var apiKey: String,
