@@ -39,6 +39,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
                 .add(from = State.PromptSelection, to = State.Login)
                 .add(from = State.PromptSelection, to = State.Back)
                 .add(from = State.PromptSelection, to = State.SignUp)
+                .add(from = State.PromptSelection, to = State.Done)
 
                 .add(from = State.Login, to = State.Done)
                 .add(from = State.SignUp, to = State.Done)
@@ -52,7 +53,7 @@ class AppLandingFlowController(private val context: AppCompatActivity, private v
                 .on(state = State.Login, execute = this::onLogin)
                 .on(state = State.SignUp, execute = this::onSignUp)
                 .on(state = State.Back, execute = this::onBack)
-                .onType(state = State.Done, execute = this::onDone)
+                .on(state = State.Done, execute = this::onDone)
                 .onType(state = State.Fail, execute = this::onFail)
     }
 
