@@ -2,6 +2,7 @@ package com.heb.dtn.flow.account
 
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.heb.dtn.R
 import com.heb.dtn.app.AppProxy
 import com.heb.dtn.extensions.hide
 import com.heb.dtn.flow.core.BaseFlowController
@@ -148,31 +149,18 @@ class LoginFlowController(private val context: AppCompatActivity, private val fr
                 .then {
                     this.transition(from = state, to = State.PasswordResetSuccess, with = email)
                 }
-//                .recover {
-//                    print("foobar")
-//                    var dialog: StandardDialog? = null
-//                    dialog = StandardDialog.Builder(this.context, R.style.LoginErrorStyle)
-//                                        .setTitle("Error")
-//                                        .setMessage("The email you entered appears to be invalid")
-//                                        .setPositiveButton(R.string.ok_button, View.OnClickListener {
-//                                            //resolve(Unit)
-//                                        }).build()
-//                               dialog?.isCancelable = false
-//                                dialog?.show(this.controlActivity?.supportFragmentManager, UIControlDelegation.DIALOG_FRAGMENT_TAG)
-//                }
+                .recover {
+                    this.showDialog(style = R.style.LoginErrorStyle, title = this.getString(R.string.login_error_title)
+                            , message = "The email provided did not match our records."
+                            , action = this.getString(R.string.ok_button))
+                            .then {
+                                this.transition(from = state, to = State.ForgotPassword, with = email)
+                            }
+                }
                 .catch {
                     this.transition(from = state, to = State.ForgotPassword, with = email)
                 }
                 .always { activityIndicator?.hide() }
-/*
-                .back { this.transition(from = state, to = State.Prompt) }
-                .cancel { this.transition(from = state, to = State.Cancel) }
-                .complete {
-                    this.transition(from = state, to = State.Prompt) }
-                .catch {
-                    this.transition(from = state, to = State.Fail)
-                }
-                */
     }
 
     private fun onPasswordResetSuccess(state: State, email: String) {
