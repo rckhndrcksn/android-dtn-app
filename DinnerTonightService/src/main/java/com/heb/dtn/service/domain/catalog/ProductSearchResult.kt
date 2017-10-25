@@ -9,3 +9,9 @@ class ProductSearchResult {
     var items: List<Product> = emptyList()
 
 }
+
+class StoreProductSearchResult {
+
+    var items: List<StoreProduct> = emptyList()
+
+}

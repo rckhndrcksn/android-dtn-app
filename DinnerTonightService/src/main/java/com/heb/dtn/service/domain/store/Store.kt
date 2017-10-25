@@ -4,6 +4,8 @@ package com.heb.dtn.service.domain.store
 // Created by Khuong Huynh on 9/27/17.
 //
 
+typealias StoreNumber = Int
+
 class Store {
     companion object {
         // South Flores Market HEB store.
@@ -24,7 +26,7 @@ class Store {
     var name: String
     var phone: String
     var state: String
-    var storeNumber: Int
+    var storeNumber: StoreNumber
     var zip: String
 
     init {

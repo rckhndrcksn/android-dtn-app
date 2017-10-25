@@ -14,7 +14,7 @@ import java.io.Serializable
 class StoreItem(store: Store) : ClusterItem, Serializable {
     @Transient private var position: LatLng
     val name: String
-    private val storeNumber: Int
+    private val storeNumber: StoreNumber
     val address1: String
     val address2: String
     var distanceToLocation = 0.0

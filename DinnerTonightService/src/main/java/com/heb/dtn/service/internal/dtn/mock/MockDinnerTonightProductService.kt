@@ -5,6 +5,8 @@ import com.heb.dtn.foundation.promise.android.PromiseDispatch
 import com.heb.dtn.foundation.service.JSONDecoder
 import com.heb.dtn.service.api.ProductService
 import com.heb.dtn.service.domain.catalog.ProductSearchResult
+import com.heb.dtn.service.domain.catalog.StoreProductSearchResult
+import com.heb.dtn.service.domain.store.StoreNumber
 import com.inmotionsoftware.promise.Promise
 
 //
@@ -23,4 +25,10 @@ class MockDinnerTonightProductService(private val context: Context) : ProductSer
                 }
     }
 
+    override fun getProducts(atStore: StoreNumber): Promise<StoreProductSearchResult> {
+        return Promise(Unit)
+                .then(on = PromiseDispatch.BACKGROUND.executor) {
+                    StoreProductSearchResult()
+                }
+    }
 }
