@@ -16,7 +16,6 @@ android {
     }
 
     compileSdkVersion project.property("androidCompiledSdkVersion").toInteger()
-    buildToolsVersion project.property("selectedBuildToolsVersion")
     project.archivesBaseName = "DinnerTonight"
 
     defaultConfig {
@@ -63,6 +62,7 @@ android {
         maxProcessCount 4
         javaMaxHeapSize "5g"
     }
+    buildToolsVersion '26.0.2'
 }
 
 ext {
