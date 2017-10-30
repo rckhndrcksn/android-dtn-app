@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
@@ -27,6 +28,13 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        toolbar.title = getString(R.string.pickup_button)
+        AppProxy.proxy.selectedStore?.let {
+            if (!it.name.isNullOrBlank()) {
+                toolbar.subtitle = it.name
+            }
+        }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, ProductsListFragment())

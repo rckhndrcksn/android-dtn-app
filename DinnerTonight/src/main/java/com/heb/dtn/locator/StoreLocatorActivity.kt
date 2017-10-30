@@ -7,6 +7,7 @@ package com.heb.dtn.locator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.widget.ProgressBar
 import com.heb.dtn.R
 import com.google.android.gms.location.LocationSettingsStates
@@ -16,7 +17,10 @@ import com.heb.dtn.locator.domain.StoreItem
 import com.heb.dtn.utils.LocationServiceManager
 import com.heb.dtn.utils.UIControlDelegate
 import com.heb.dtn.utils.UIControlDelegation
+import com.heb.dtn.widget.DTNTabLayout
 import com.inmotionsoftware.imsflow.*
+import kotlinx.android.synthetic.main.activity_store_locator.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class StoreLocatorActivity : FlowActivity(), UIControlDelegate by UIControlDelegation() {
 
@@ -26,6 +30,12 @@ class StoreLocatorActivity : FlowActivity(), UIControlDelegate by UIControlDeleg
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.activity_store_locator)
 
+        setSupportActionBar(toolbar)
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        toolbar.title = getString(R.string.fullfillment_title)
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.delivery_button)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.pickup_button)), true)
+
         this.controlActivity = this
         this.progressBar = this.findViewById(R.id.spinner) as ProgressBar
         this.fragmentContainerId = R.id.fragmentContainer
@@ -33,10 +43,13 @@ class StoreLocatorActivity : FlowActivity(), UIControlDelegate by UIControlDeleg
 
     override fun onStartFlow() {
         if (this.flow != null) return
-        this.flow = AppProxy.proxy.flow.locateStore(this, this.fragmentContainerId, StoreLocatorOption.DEFAULT)
+        this.flow = AppProxy.proxy.flow.fullfillment(this, this.fragmentContainerId, tabLayout)
         this.flow!!.back { this.finishFlow(result = Activity.RESULT_CANCELED) }
                 .cancel { this.finishFlow(result = Activity.RESULT_CANCELED) }
-                .complete { this.finishFlow(result = Activity.RESULT_OK) }
+                .complete {
+                    AppProxy.proxy.selectedStore = it
+                    this.finishFlow(result = Activity.RESULT_OK)
+                }
     }
 
     private fun finishFlow(result: Int) {

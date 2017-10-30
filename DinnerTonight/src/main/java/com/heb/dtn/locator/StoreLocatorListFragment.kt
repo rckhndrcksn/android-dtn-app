@@ -6,7 +6,6 @@ package com.heb.dtn.locator
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,74 +27,77 @@ class StoreLocatorListFragment : RecyclerListViewFragment<List<StoreItem>>() {
     var itemListener: ListItemListener? = null
     private lateinit var listHeaderTitle: String
 
-
     override fun onInitView() {
         this.listView?.setItemDividerVisible(false)
         this.switchToNearByList()
     }
 
-    fun switchToSearchList() {
-        this.listHeaderTitle = this.getString(R.string.rx_locator_search_result_header_filtered)
-        this.handlePlaceHolderViews(true)
-    }
-
     fun switchToNearByList() {
-        this.listHeaderTitle = this.getString(R.string.rx_locator_search_result_header_nearby)
+        this.listHeaderTitle = getString(R.string.locations_hint)
         this.setData(arrayListOf<StoreItem>())
         this.handlePlaceHolderViews(false)
     }
 
-    override fun backgroundColor(): Int = ContextCompat.getColor(this.activity, R.color.defaultBackground)
+    override fun backgroundColor(): Int = ContextCompat.getColor(this.activity, android.R.color.transparent)
     override fun actionType(): RecyclerList.ActionType = RecyclerList.ActionType.NO_ACTION
     override fun onCreateAdapter(data: List<StoreItem>): RecyclerListView.Adapter = StoreLocatorListAdapter(this.context, data, this.listHeaderTitle)
     override fun showPlaceholderViews(): Boolean = this.listView?.adapter?.itemCount == 0
 
     inner class StoreLocatorListAdapter(context: Context, val storeItems: List<StoreItem>, val headerTitle: String) : RecyclerListView.Adapter() {
+        private val NUMBER_OF_SECTIONS = 2
 
-        private val VIEW_TYPE_HEADER = 1
-        private val VIEW_TYPE_ITEM = 2
+        private val SEARCH_SECTION_INDEX = 0
+        private val STORE_ITEMS_SECTION_INDEX = 1
 
-        override fun numberOfRowsInSection(section: Int): Int = this.storeItems.size
+        private val VIEW_TYPE_SEARCH_ITEM = 1
+        private val VIEW_TYPE_HEADER = 2
+        private val VIEW_TYPE_ITEM = 3
+
+        override fun numberOfRowsInSection(section: Int): Int = when(section) {
+            SEARCH_SECTION_INDEX -> 1
+            STORE_ITEMS_SECTION_INDEX -> storeItems.size
+            else -> 0
+        }
 
         override fun onCreateView(parent: ViewGroup?, viewType: Int): View? {
-
             val inflater = LayoutInflater.from(this@StoreLocatorListFragment.context)
 
-            val view = when(viewType) {
-                VIEW_TYPE_ITEM -> inflater.inflate(R.layout.view_store_info, null)
-                VIEW_TYPE_HEADER -> inflater.inflate(R.layout.view_header_title, null)
+            return when(viewType) {
+                VIEW_TYPE_ITEM -> inflater.inflate(R.layout.view_store_info, parent, false)
+                VIEW_TYPE_SEARCH_ITEM -> inflater.inflate(R.layout.view_search, parent, false)
+                VIEW_TYPE_HEADER -> inflater.inflate(R.layout.view_header_title, parent, false)
                 else -> null
             }
-
-            if (view != null) {
-                view.layoutParams = RecyclerView.LayoutParams(
-                        RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
-            }
-
-            return view
         }
 
         override fun onBindView(view: View?, index: Index) {
-            val storeItem = this.storeItems[index.row]
-
-            view?.title?.text = storeItem.name
-            view?.address1?.text = storeItem.address1
-            view?.address2?.text = storeItem.address2
-            view?.distance?.text = "${storeItem.distanceToLocation} mi."
-
-            view?.setOnClickListener { this@StoreLocatorListFragment.itemListener?.onItemClicked(storeItem) }
+            if (index.section == STORE_ITEMS_SECTION_INDEX) {
+                val storeItem = this.storeItems[index.row]
+                view?.title?.text = storeItem.name
+                view?.address?.text = "${storeItem.address1} ${storeItem.address2}"
+                view?.distance?.text = getString(R.string.store_distance_in_miles, storeItem.distanceToLocation)
+                view?.setOnClickListener { this@StoreLocatorListFragment.itemListener?.onItemClicked(storeItem) }
+            }
         }
 
         override fun onBindHeaderView(view: View, section: Int) {
             val standardView = view as TextView
-
             standardView.text = this.headerTitle
         }
 
-        override fun getItemViewTypeAtIndex(index: Index): Int = VIEW_TYPE_ITEM
+        override fun getItemViewTypeAtIndex(index: Index): Int = when(index.section) {
+            SEARCH_SECTION_INDEX -> VIEW_TYPE_SEARCH_ITEM
+            STORE_ITEMS_SECTION_INDEX -> VIEW_TYPE_ITEM
+            else -> super.getItemViewTypeAtIndex(index)
+        }
 
-        override fun getHeaderViewTypeInSection(section: Int): Int = VIEW_TYPE_HEADER
+        override fun getHeaderViewTypeInSection(section: Int): Int = when(section) {
+            STORE_ITEMS_SECTION_INDEX -> VIEW_TYPE_HEADER
+            else -> super.getHeaderViewTypeInSection(section)
+        }
 
-        override fun hasHeaderInSection(section: Int): Boolean = true
+        override fun hasHeaderInSection(section: Int): Boolean = section == STORE_ITEMS_SECTION_INDEX
+
+        override fun numberOfSections(): Int = NUMBER_OF_SECTIONS
     }
 }

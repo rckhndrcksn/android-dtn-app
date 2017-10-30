@@ -1,4 +1,29 @@
 <resources>
+    <style name="ActionBarTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textSize">21dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="ActionBarSubTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">true</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="DTNTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@drawable/tab_background</item>
+        <item name="tabIndicatorHeight">3dp</item>
+    </style>
+
     <style name="BottomSheetDialogButtons">
         <item name="android:layout_width">192dp</item>
         <item name="android:layout_height">60dp</item>
@@ -136,5 +161,26 @@
         <item name="android:layout_marginTop">@dimen/custom_dialog_title_accent_top_margin</item>
         <item name="android:layout_marginBottom">@dimen/custom_dialog_title_accent_bottom_margin</item>
         <item name="android:background">?attr/colorControlActivated</item>
+    </style>
+
+    <style name="StoreTitleStyle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="AddressStyle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="DistanceStyle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#b3b3ba</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>

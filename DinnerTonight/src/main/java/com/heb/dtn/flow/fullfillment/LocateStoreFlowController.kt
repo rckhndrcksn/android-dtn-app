@@ -1,21 +1,12 @@
-package com.heb.dtn.flow
+package com.heb.dtn.flow.fullfillment
 
-import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-//import com.heb.pharmacy.account.PharmacyProfileDelegation
-import com.heb.dtn.app.AppProxy
 import com.heb.dtn.flow.core.BaseFlowController
 import com.heb.dtn.locator.*
 import com.heb.dtn.locator.domain.StoreItem
-import com.heb.dtn.extensions.hide
 import com.heb.dtn.service.domain.profile.Profile
 import com.inmotionsoftware.imsflow.*
-import com.heb.dtn.R
 import com.heb.dtn.foundation.promise.android.*
-import com.inmotionsoftware.promise.Promise
-import kotlinx.android.synthetic.main.dialog_preferred_store_selected.view.*
 
 class LocateStoreFlowController(private val context: AppCompatActivity, fragmentContainerView: Int, option: StoreLocatorOption)
     : BaseFlowController<LocateStoreFlowController.State, Unit, StoreItem>(context = context, fragmentContainerView = fragmentContainerView) {
@@ -42,18 +33,10 @@ class LocateStoreFlowController(private val context: AppCompatActivity, fragment
 
     init {
         this.initialize()
-/*
-        this.option =
-                if (option == StoreLocatorOption.DEFAULT && AppProxy.proxy.accountManager().isAuthenticated()) {
-                    PharmacyLocatorOption.SAVE_PREFERRED_STORE
-                } else {
-                    option
-                }
-                */
         this.option = option
     }
 
-    override fun registerStates(states: Builder<LocateStoreFlowController.State>) {
+    override fun registerStates(states: Builder<State>) {
         states
                 .initialState(state = State.BEGIN)
                 .add(from = State.BEGIN, to = State.FIND_STORE)
@@ -75,7 +58,7 @@ class LocateStoreFlowController(private val context: AppCompatActivity, fragment
                 .addFromAny(to = State.FAIL)
     }
 
-    override fun registerEvents(listener: StateListener<LocateStoreFlowController.State>) {
+    override fun registerEvents(listener: StateListener<State>) {
         listener
                 .on(state = State.FIND_STORE, execute = this::onFindPharmacy)
                 .onType(state = State.SELECT_STORE, execute = this::onSelectPharmacy)

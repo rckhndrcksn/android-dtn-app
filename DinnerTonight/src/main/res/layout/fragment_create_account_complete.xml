@@ -5,7 +5,7 @@
 
     <TextView
         android:id="@+id/title"
-        android:text="@string/create_acct_title"
+        android:text="@string/acct_created_title"
         style="@style/DialogTitleStyle"/>
 
     <View

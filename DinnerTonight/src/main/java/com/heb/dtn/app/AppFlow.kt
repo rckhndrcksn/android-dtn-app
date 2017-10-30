@@ -1,12 +1,14 @@
 package com.heb.dtn.app
 
 import android.support.v7.app.AppCompatActivity
-import com.heb.dtn.flow.*
 import com.heb.dtn.flow.account.CreateAccountFlowController
 import com.heb.dtn.flow.account.LoginFlowController
 import com.heb.dtn.flow.app.AppLandingFlowController
+import com.heb.dtn.flow.fullfillment.FullfillmentFlowController
+import com.heb.dtn.flow.fullfillment.LocateStoreFlowController
 import com.heb.dtn.locator.StoreLocatorOption
 import com.heb.dtn.locator.domain.StoreItem
+import com.heb.dtn.widget.DTNTabLayout
 import com.inmotionsoftware.imsflow.*
 
 //
@@ -28,9 +30,11 @@ class AppFlow {
     fun createAccount(context: AppCompatActivity, fragmentContainerView: Int): FlowPromise<Boolean>
             = CreateAccountFlowController(context = context, fragmentContainerView = fragmentContainerView).start()
 
-    // Store Locator
+    // Fullfillment
 
-    fun locateStore(context: AppCompatActivity, fragmentContainerView: Int, option: StoreLocatorOption): FlowPromise<StoreItem>
+    fun fullfillment(context: AppCompatActivity, fragmentContainerView: Int, tabLayout: DTNTabLayout): FlowPromise<StoreItem>
+            = FullfillmentFlowController(context = context, fragmentContainerView = fragmentContainerView, tabLayout = tabLayout).start()
+
+    fun pickupFullfillment(context: AppCompatActivity, fragmentContainerView: Int, option: StoreLocatorOption): FlowPromise<StoreItem>
             = LocateStoreFlowController(context = context, fragmentContainerView = fragmentContainerView, option = option).start()
-
 }

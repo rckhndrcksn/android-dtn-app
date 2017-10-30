@@ -1,85 +1,48 @@
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.heb.dtn.locator.StoreLocatorMapFragment"
+    <com.heb.dtn.widget.DTNMapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:cameraZoom="@integer/larger_store_details_zoom"
+        app:cameraTargetLat="@string/default_store_latitude"
+        app:cameraTargetLng="@string/default_store_longitude"
+        app:largeClusterIcon="@drawable/icon_marker_large"
+        app:smallClusterIcon="@drawable/icon_marker_small"
+        app:clusterColor="@color/mapCluster"/>
 
     <LinearLayout
-        android:id="@+id/fabButtonContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/transparent"
-        app:layout_anchorGravity="top|end"
-        android:layout_gravity="top"
-        app:layout_anchor="@+id/listContainer"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/locationButton"
-            app:backgroundTint="@android:color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/svg_my_location" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/googleLogoContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/transparent"
-        app:layout_anchorGravity="top|start"
-        android:layout_gravity="top"
-        app:layout_anchor="@+id/listContainer"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp">
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/google_logo"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="8dp" />
-
-    </LinearLayout>
-
-    <FrameLayout
         android:id="@+id/listContainer"
         android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="471dp"
+        android:orientation="vertical"
+        android:background="@android:color/white"
         app:layout_behavior="@string/bottom_sheet_behavior"
-        app:behavior_peekHeight="@dimen/view_header_title_height"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="306dp"
         app:elevation="4dp">
-        <fragment
+
+        <ImageView
+            android:id="@+id/bottomSheetIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_collapsed"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp" />
+
+        <FrameLayout
             android:id="@+id/listFragment"
-            android:name="com.heb.dtn.locator.StoreLocatorListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </FrameLayout>
+    </LinearLayout>
 
-    <include
-        android:id="@+id/selectedPharmacyInfo"
-        android:visibility="invisible"
-        layout="@layout/view_store_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+
 
 </android.support.design.widget.CoordinatorLayout>

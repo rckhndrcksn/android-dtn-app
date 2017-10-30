@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fillViewport="true">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:custom="http://schemas.android.com/apk/res-auto"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -263,6 +263,19 @@
             app:layout_constraintGuide_percent="0.35"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="198dp" />
+
+        <com.heb.dtn.widget.DTNRoundedButton
+            android:id="@+id/setStoreButton"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            app:borderColor="#0f7cff"
+            app:fillColor="#0f7cff"
+            android:text="Set"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@+id/hours"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="8dp"/>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

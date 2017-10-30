@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.heb.dtn.widget.DTNToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     style="?attr/actionBarStyle">
 
-</android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            tools:text="Title"
+            style="@style/ActionBarTitle"/>
+
+        <TextView
+            android:id="@+id/subtitleTextView"
+            tools:text="Subtitle"
+            android:visibility="gone"
+            style="@style/ActionBarSubTitle"/>
+    </LinearLayout>
+
+</com.heb.dtn.widget.DTNToolbar>

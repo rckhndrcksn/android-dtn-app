@@ -21,4 +21,17 @@
             <enum name="oval" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="DTNTabLayout">
+        <attr name="indicatorGravity">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DTNMapView">
+        <attr name="largeClusterIcon" format="reference" />
+        <attr name="smallClusterIcon" format="reference" />
+        <attr name="clusterColor" format="color|reference" />
+    </declare-styleable>
 </resources>

@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.heb.dtn.locator.StoreLocatorActivity">
 
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
+    <include layout="@layout/toolbar" />
+
+    <com.heb.dtn.widget.DTNTabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="49dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        style="@style/DTNTabLayout"
+        app:indicatorGravity="top" />
 
-    <include layout="@layout/view_progress_spinner" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="@drawable/toolbar_shadow"
+        android:foregroundGravity="fill_horizontal|top">
 
-</FrameLayout>
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/view_progress_spinner" />
+
+    </FrameLayout>
+
+</LinearLayout>

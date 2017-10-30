@@ -13,21 +13,14 @@ import com.heb.dtn.app.AppProxy
 import com.heb.dtn.locator.domain.StoreItem
 import com.heb.dtn.service.domain.store.Store
 import kotlinx.android.synthetic.main.fragment_store_locator_map_list.*
-import kotlinx.android.synthetic.main.view_store_info.view.*
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.widget.SearchView
-import android.util.TypedValue
 import android.view.*
-import android.widget.TextView
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.heb.dtn.foundation.promise.android.always
-import com.heb.dtn.foundation.promise.android.catch
 import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.extensions.*
-//import com.heb.dtn.service.pharmacy.api.PharmacyServiceError
-//import com.heb.dtn.service.pharmacy.api.PharmacyServiceErrorCode
-//import com.heb.dtn.service.pharmacy.domain.store.StoreFeatureCode
+import com.heb.dtn.utils.AccessPermission
+import com.heb.dtn.widget.DTNMapView
 
 data class StoreLocatorSelectedStore(val userLocation: Location, val store: StoreItem)
 
@@ -35,28 +28,15 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
 
     private var spinner: ProgressBar? = null
     private var listFragment: StoreLocatorListFragment? = null
-    private var mapFragment: StoreLocatorMapFragment? = null
     private var searching = false
     lateinit private var lastUserLocation: Location
+    lateinit private var googleMap: GoogleMap
 
     private val DEFAULT_RADIUS = AppProxy.proxy.resources.getDoubleFromString(R.string.default_radius)
 
     override fun createView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        val rootView = inflater?.inflate(R.layout.fragment_store_locator_map_list, container, false)
-
-        rootView?.setBackgroundColor(ContextCompat.getColor(this.activity, R.color.defaultBackground))
-
-        return rootView
-    }
-
-    override fun flowWillRun(args: StoreLocatorOption) {
-        if (args == StoreLocatorOption.SELECT_STORE) {
-            this.titleResId = R.string.view_title_select_pharmacy
-        } else {
-            this.titleResId = R.string.view_title_pharmacy_locator
-        }
-        super.flowWillRun(args)
+        return inflater?.inflate(R.layout.fragment_store_locator_map_list, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -73,60 +53,97 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
 
         this.spinner = this.showActivityIndicator()
 
-        this.locationButton.setOnClickListener { this.updatePharmacyStoresWithCurrentLocation() }
+        val bottomSheetLayout = BottomSheetBehavior.from(listContainer);
+        val peekHeight = bottomSheetLayout.peekHeight
+        bottomSheetLayout.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 
-        this.mapFragment = this.childFragmentManager.findFragmentById(R.id.mapFragment) as StoreLocatorMapFragment?
-        this.mapFragment?.mapViewListener = this.mapViewListener
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetIndicator.setImageResource(R.drawable.ic_collapsed)
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetIndicator.setImageResource(R.drawable.svg_ic_expanded)
+                }
+            }
 
-        this.listFragment = this.childFragmentManager.findFragmentById(R.id.listFragment) as StoreLocatorListFragment?
-        this.listFragment?.itemListener = this.listItemListener
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        if (menu?.findItem(R.id.search) == null) {
-            menu?.clear()
-            inflater?.inflate(R.menu.locator_menu, menu)
+        })
+        coordinatorLayout?.let {
+            coordinatorLayout.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val height = coordinatorLayout.measuredHeight
+                    val availableSpace = height - peekHeight
+                    if (availableSpace > 0) {
+                        val params = mapView.layoutParams
+                        params.height = availableSpace
+                        mapView.layoutParams = params
+                    }
+                    if (height > 0) {
+                        coordinatorLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        this@StoreLocatorMapListFragment.loadMap()
+                    }
+                }
+            })
         }
 
-        val menuItem = menu?.findItem(R.id.search)
-        val searchView = MenuItemCompat.getActionView(menuItem) as SearchView
 
-        val v = searchView.findViewById(android.support.v7.appcompat.R.id.search_plate)
-        v.setBackgroundColor(searchView.getCompatColor(R.color.defaultBackground))
+        this.listFragment = this.childFragmentManager.findFragmentById(R.id.listFragment) as StoreLocatorListFragment?
+        if (this.listFragment == null) {
+            val ft = this.childFragmentManager.beginTransaction()
+            this.listFragment = StoreLocatorListFragment()
+            ft.replace(R.id.listFragment, this.listFragment)
+            ft.commit()
+        }
+        this.listFragment?.itemListener = this.listItemListener
 
-        searchView.queryHint = this.getString(R.string.rx_locator_search_placeholder)
+        this.mapView?.setMapViewListener(this.mapViewListener)
+        this.mapView?.onCreate(savedInstanceState)
+    }
 
-        val searchTextView = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as TextView
-        searchTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, this.resources.getDimension(R.dimen.text_large))
+    private fun loadMap() {
+        this.mapView?.getMapAsync { map ->
+            this.googleMap = map
+            this.googleMap.uiSettings.isRotateGesturesEnabled = false
 
-        MenuItemCompat.setOnActionExpandListener(menuItem, object : MenuItemCompat.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                menu?.findItem(R.id.cancel)?.isVisible = false
-                this@StoreLocatorMapListFragment.showSearch()
-
-                return true
+            // For showing a center to my location button on map
+            if (AccessPermission.isLocationAccessGranted) {
+                this.onLocationEnable()
             }
+        }
+    }
 
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                menu?.findItem(R.id.cancel)?.isVisible = true
-                this@StoreLocatorMapListFragment.showNearby()
-                return true
-            }
-        })
+    override fun onStop() {
+        super.onStop()
+        this.mapView?.onStop()
+    }
 
-        searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { this@StoreLocatorMapListFragment.searchPharmacyStores(query) }
-                return true
-            }
-            override fun onQueryTextChange(newText: String?): Boolean = false
-        })
+    override fun onResume() {
+        super.onResume()
+        this.mapView?.onResume()
+    }
+
+    override fun onPause() {
+        this.mapView?.onPause()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        this.mapView?.onDestroy()
+        super.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        this.mapView?.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        this.mapView?.onSaveInstanceState(outState)
     }
 
     override fun onLocationRetrieved(location: Location, isLocationEnabled: Boolean) {
         this.lastUserLocation = location
         this.zoomToUserLocation(location)
-        if (isLocationEnabled) this.mapFragment?.onLocationEnable()
         this.activity.runOnUiThread { this.spinner?.hide() }
     }
 
@@ -146,48 +163,9 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
     //
     // Private Methods
     //
-    private fun showSearch() {
-        this.searching = true
-        this.listContainer.expand()
-
-        this.hidePharmacyInfoAndShowList()
-        this.listFragment?.switchToSearchList()
-    }
-
-    private fun showNearby() {
-        this.searching = false
-        this.listContainer.collapse()
-        this.listFragment?.switchToNearByList()
-
-        // Refresh map camera to get the nearby locations
-        this.mapFragment?.refresh()
-    }
-
-    private fun populatePharmacyInfoView(storeItem: StoreItem) {
-        this.selectedPharmacyInfo.title.text = storeItem.name
-        this.selectedPharmacyInfo.address1.text = storeItem.address1
-        this.selectedPharmacyInfo.address2.text = storeItem.address2
-        this.selectedPharmacyInfo.distance.text = "${storeItem.distanceToLocation} mi."
-        this.selectedPharmacyInfo.setOnClickListener { this.listFragment?.itemListener?.onItemClicked(storeItem) }
-    }
-
-    private fun hideListAndShowPharmacyInfo() {
-        this.listContainer.setPeekHeight(0)
-        this.fabButtonContainer.switchAnchorTo(R.id.selectedPharmacyInfo)
-        this.googleLogoContainer.switchAnchorTo(R.id.selectedPharmacyInfo)
-        this.selectedPharmacyInfo.show()
-    }
-
-    private fun hidePharmacyInfoAndShowList() {
-        this.resetListContainerPosition()
-        this.fabButtonContainer.switchAnchorTo(R.id.listContainer)
-        this.googleLogoContainer.switchAnchorTo(R.id.listContainer)
-        this.selectedPharmacyInfo.hide()
-    }
-
-    private fun resetListContainerPosition() {
-        val peekHeight = this.resources.getDimensionPixelSize(R.dimen.fragment_map_list_peek_height)
-        this.listContainer.setPeekHeight(peekHeight)
+    private fun onLocationEnable() {
+        this.googleMap.uiSettings.isMyLocationButtonEnabled = false
+        this.googleMap.isMyLocationEnabled = true
     }
 
     private fun setStores(stores: List<Store>) {
@@ -202,7 +180,7 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
             this.listFragment?.setData(sortedItems)
         }
 
-        this.mapFragment?.setStoreItems(sortedItems)
+        this.mapView?.setStoreItems(sortedItems)
     }
 
     private fun updatePharmacyStoresWithCurrentLocation() {
@@ -212,7 +190,7 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
     }
 
     private fun zoomToUserLocation(location: Location) {
-        this.activity.runOnUiThread { this.mapFragment?.zoomToLatLng(LatLng(location.latitude, location.longitude), 13) }
+        zoomToLatLng(LatLng(location.latitude, location.longitude), 13)
         this.lastUserLocation = location
     }
 
@@ -226,39 +204,24 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
                 .always { this.spinner?.hide() }
     }
 
-    private fun searchPharmacyStores(zipcode: String, radius: Double? = null) {
-        /*
-        this.spinner?.show()
+    //
+    // Private methods
+    //
+    private fun zoomToLatLng(latLng: LatLng, zoomLevel: Int = AppProxy.proxy.resources.getInteger(R.integer.default_store_details_zoom), animate: Boolean = true) {
+        val center = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel.toFloat())
 
-        val service = AppProxy.proxy.serviceManager().storeService()
-
-        service.getStores(zipcode, radius, listOf(StoreFeatureCode.PHARMACY))
-                .then { result ->
-                    this.setStores(result.stores) }
-                .catch {
-                    val error = it as PharmacyServiceError
-                    val message = when (error.code) {
-                        PharmacyServiceErrorCode.INVALID_STORE_SEARCH_ZIPCODE -> this.getString(R.string.invalid_store_search_zipcode)
-                        PharmacyServiceErrorCode.INVALID_STORE_SEARCH_CITY_STATE -> this.getString(R.string.invalid_store_search_city_state)
-                        else -> null
-                    }
-
-                    if (message.isNullOrEmpty()) {
-                        this.showErrorDialog(it)
-                    } else {
-                        this.showDialog(title = this.getString(R.string.error), message = message)
-                    }
-                }
-                .always { this.spinner?.hide() }
-                */
+        when(animate) {
+            true -> this.googleMap.animateCamera(center)
+            else -> this.googleMap.moveCamera(center)
+        }
     }
 
     //
     // Listeners
     //
 
-    private val mapViewListener: StoreLocatorMapFragment.MapViewListener
-        get() = object : StoreLocatorMapFragment.MapViewListener {
+    private val mapViewListener: DTNMapView.MapViewListener
+        get() = object : DTNMapView.MapViewListener {
             override fun onMapLoaded() { this@StoreLocatorMapListFragment.updatePharmacyStoresWithCurrentLocation() }
 
             override fun onCameraLocationChange(latNLng: LatLng, radius: Double) {
@@ -273,11 +236,11 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
 
             override fun onMarkerClick(storeItem: StoreItem?) {
                 storeItem?.let {
-                    this@StoreLocatorMapListFragment.populatePharmacyInfoView(storeItem)
-                    this@StoreLocatorMapListFragment.hideListAndShowPharmacyInfo()
+                    val location = this@StoreLocatorMapListFragment.lastUserLocation
+                    this@StoreLocatorMapListFragment.finish(StoreLocatorSelectedStore(userLocation = location, store = storeItem))
                 }
             }
-            override fun onMarkerDeselected() { this@StoreLocatorMapListFragment.hidePharmacyInfoAndShowList() }
+            override fun onMarkerDeselected() {  }
         }
 
     private val listItemListener: StoreLocatorListFragment.ListItemListener
@@ -287,28 +250,4 @@ class StoreLocatorMapListFragment : LocatorFragment<StoreLocatorOption, StoreLoc
                 this@StoreLocatorMapListFragment.finish(StoreLocatorSelectedStore(userLocation = location, store = storeItem))
             }
         }
-
-    //
-    // Extensions
-    //
-    private fun ViewGroup.switchAnchorTo(id: Int) {
-        val layoutParams = this.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.anchorId = id
-        this.layoutParams = layoutParams
-    }
-
-    private fun ViewGroup.setPeekHeight(height: Int) {
-        val behavior = BottomSheetBehavior.from(this)
-        behavior.peekHeight = height
-    }
-
-    private fun ViewGroup.expand() {
-        val behavior = BottomSheetBehavior.from(this)
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-    }
-
-    private fun ViewGroup.collapse() {
-        val behavior = BottomSheetBehavior.from(this)
-        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
 }

@@ -49,7 +49,6 @@
 
         <activity
             android:name="com.heb.dtn.locator.StoreLocatorActivity"
-            android:label="@string/view_title_pharmacy_locator"
             android:parentActivityName="com.heb.dtn.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data

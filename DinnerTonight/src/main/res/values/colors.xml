@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">@android:color/white</color>
     <color name="colorPrimaryDark">@android:color/black</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#0f7cff</color>
     <color name="defaultBackground">#ffffff</color>
 
     <color name="rxLightBlue">#064b8d</color>
     <color name="inputBarDimmed">#72919dad</color>
     <color name="mapCluster">#ed1b24</color>
     <color name="inputHintTextColor">#9b9b9b</color>
-    <color name="inputBarNormal">#919dad</color>
 
     <color name="snackBarText">#fff</color>
     <color name="snackBarActionText">@color/colorPrimary</color>

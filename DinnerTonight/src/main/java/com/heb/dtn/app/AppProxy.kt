@@ -4,6 +4,7 @@ import android.support.multidex.BuildConfig
 import android.support.multidex.MultiDexApplication
 import com.heb.dtn.account.AccountManager
 import com.heb.dtn.foundation.promise.android.always
+import com.heb.dtn.locator.domain.StoreItem
 import com.heb.dtn.service.domain.account.OAuthToken
 import com.heb.dtn.service.domain.store.Store
 import com.heb.dtn.service.manager.DefaultDinnerTonightServiceManager
@@ -21,6 +22,7 @@ open class AppProxy : MultiDexApplication(), AccountManager.Delegate {
     lateinit private var accountManager: AccountManager
     lateinit private var preferences: AppPreferences
     lateinit private var environment: DinnerTonightServiceEnvironment
+    var selectedStore: StoreItem? = null
     val flow: AppFlow = AppFlow()
 
     /**

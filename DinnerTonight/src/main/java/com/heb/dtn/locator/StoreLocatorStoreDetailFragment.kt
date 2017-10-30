@@ -34,17 +34,11 @@ data class StoreDetailParams(
         var userLocation: Location? = null
 )
 
-class StoreLocatorStoreDetailFragment : StoreLocatorFragment<StoreDetailParams, StoreItem>() {
+class StoreLocatorStoreDetailFragment : LocatorFragment<StoreDetailParams, StoreItem>() {
 
     override fun flowWillRun(args: StoreDetailParams) {
         this.activity.title = args.title
-        if (args.title.isNullOrEmpty()) {
-            this.titleResId = if (args.option == StoreLocatorOption.SELECT_STORE) {
-                R.string.view_title_select_pharmacy
-            } else {
-                R.string.view_title_pharmacy_locator
-            }
-        }
+
         this.updateView(args)
         super.flowWillRun(args)
     }
@@ -60,18 +54,11 @@ class StoreLocatorStoreDetailFragment : StoreLocatorFragment<StoreDetailParams, 
 
     private fun updateView(pharmacyDetailParams: StoreDetailParams) {
         this.mapView.isClickable = false
-        this.populateTitle(pharmacyDetailParams)
 
         this.mapView.hide()
         this.mapSpinner.show()
 
         val option = pharmacyDetailParams.option
-
-        if (option == StoreLocatorOption.SELECT_STORE) {
-            this.titleResId = R.string.view_title_select_pharmacy
-        } else if (option == StoreLocatorOption.SAVE_PREFERRED_STORE) {
-            this.titleResId = R.string.view_title_pharmacy_locator
-        }
 
         val storeItem = pharmacyDetailParams.storeItem
         if (pharmacyDetailParams.userLocation == null) {
@@ -138,21 +125,7 @@ class StoreLocatorStoreDetailFragment : StoreLocatorFragment<StoreDetailParams, 
             }
         }
 
-        val buttonText = when(pharmacyDetailParams.option) {
-            StoreLocatorOption.SELECT_STORE ->
-                getString(R.string.view_title_select_pharmacy)
-            StoreLocatorOption.CHANGE_STORE ->
-                getString(R.string.rx_locator_change_store)
-            StoreLocatorOption.SAVE_PREFERRED_STORE ->
-                getString(R.string.rx_locator_save_preferred_pharmacy)
-            StoreLocatorOption.DEFAULT -> ""
-        }
-
-        if (buttonText.isNotEmpty()) {
-            this.actionButton.text = buttonText
-            this.actionButton.show()
-            this.actionButton.setOnClickListener({ this.finish(pharmacyDetailParams.storeItem)})
-        }
+        setStoreButton.setOnClickListener { finish(storeItem) }
     }
 
     //
@@ -160,16 +133,4 @@ class StoreLocatorStoreDetailFragment : StoreLocatorFragment<StoreDetailParams, 
     //
     private fun validCoordinate(coordinate: Double): Boolean
         = !coordinate.isNaN() && coordinate != 0.0
-
-    private fun populateTitle(pharmacyDetailParams: StoreDetailParams) {
-        val title = pharmacyDetailParams.title ?: when(pharmacyDetailParams.option) {
-            StoreLocatorOption.SELECT_STORE ->
-                getString(R.string.view_title_select_pharmacy)
-            StoreLocatorOption.CHANGE_STORE, StoreLocatorOption.SAVE_PREFERRED_STORE ->
-                getString(R.string.view_title_pharmacy_locator)
-            StoreLocatorOption.DEFAULT ->
-                    pharmacyDetailParams.title ?: ""
-        }
-        this.activity.title = title
-    }
 }
