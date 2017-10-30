@@ -1,7 +1,9 @@
 package com.heb.dtn.service.api
 
-import com.heb.dtn.service.domain.cart.Cart
+import com.heb.dtn.service.domain.order.Order
 import com.heb.dtn.service.domain.order.OrderResult
+import com.heb.dtn.service.domain.order.SubmittedOrder
+import com.heb.dtn.service.domain.profile.UserId
 import com.inmotionsoftware.promise.Promise
 
 /**
@@ -9,5 +11,8 @@ import com.inmotionsoftware.promise.Promise
  */
 interface OrderService {
 
-    fun createOrder(cart: Cart): Promise<OrderResult>
+    fun submitOrder(order: Order): Promise<OrderResult>
+
+    fun orderHistory(userId: UserId): Promise<List<SubmittedOrder>>
+
 }

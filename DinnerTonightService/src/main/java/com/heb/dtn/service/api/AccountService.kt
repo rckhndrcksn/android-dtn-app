@@ -3,7 +3,6 @@ package com.heb.dtn.service.api
 import com.heb.dtn.service.domain.account.Registration
 import com.heb.dtn.service.domain.account.Session
 import com.heb.dtn.service.domain.account.UID
-import com.heb.dtn.service.domain.profile.Profile
 import com.inmotionsoftware.promise.Promise
 import java.util.*
 
@@ -39,12 +38,8 @@ sealed class AccountServiceError : Throwable() {
 
 interface AccountService {
 
-    //fun resetPassword(email: String): Promise<Unit>
+    fun getSessionToken(uid: UID, signature: String, timestamp: String): Promise<String>
 
-    fun finalizeAccount(token: Registration, firstName: String, lastName: String): Promise<Session>
-
-    fun getJwt(uid: UID, signature: String, timestamp: String): Promise<String>
-
-    fun getProfile(): Promise<Profile>
+    fun finalizeAccountRegistration(token: Registration, firstName: String, lastName: String): Promise<Session>
 
 }

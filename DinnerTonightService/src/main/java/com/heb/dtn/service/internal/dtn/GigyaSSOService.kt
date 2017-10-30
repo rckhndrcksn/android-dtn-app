@@ -3,6 +3,7 @@ package com.heb.dtn.service.internal.dtn
 import com.heb.dtn.foundation.extension.formUnion
 import com.heb.dtn.foundation.promise.android.recover
 import com.heb.dtn.foundation.promise.android.then
+import com.heb.dtn.foundation.promise.android.thenp
 import com.heb.dtn.foundation.service.HTTPService
 import com.heb.dtn.foundation.service.JSONDecoder
 import com.heb.dtn.foundation.service.decoder
@@ -18,17 +19,17 @@ import com.inmotionsoftware.promise.Promise
 // Created by Maksim Orlovich on 10/11/17.
 //
 
-class GigyaConfig(
+internal class GigyaConfig(
     val config: HTTPService.Config,
     val apiKey: String,
     val userKey: String,
     val secret: String
 )
 
-class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config), SSOService {
+internal class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config), SSOService {
     private var session: Gigya.Accounts.SessionInfo? = null
 
-    override fun login(email: String, password: String): Promise<LoginResponse> {
+    override fun authenticate(email: String, password: String): Promise<AuthResponse> {
         val body = Gigya.Accounts.LoginRequest(
                 apiKey = this.gigya.apiKey
                 , userKey = this.gigya.userKey
@@ -47,7 +48,7 @@ class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config)
                 .then { resp ->
                     this.session = resp.sessionInfo
 
-                    LoginResponse(
+                    AuthResponse(
                         profile = Profile(
                             userId = resp.UID,
                             firstName = resp.profile?.firstName ?: "",
@@ -99,19 +100,16 @@ class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config)
                     .asVoid()
     }
 
-    fun getAccount(uid: UID, token: RegistrationToken): Promise<Unit> {
-        val body = Gigya.Ids.GetAccountInfoRequest(UID = uid, regToken = token)
-        return this.send(route = "ids.getAccountInfo"
-                        , body = UploadBody.FormUrlEncoded(body.parameters())
-                        , type = Gigya.Ids.GetAccountInfoResponse::class.java)
-                    .recover { error ->
-                        if (error !is Gigya.Error) throw error
-                        throw AccountServiceError.Unknown()
-                    }
-                    .asVoid()
+    override fun registerAccount(email: String, password: String): Promise<Registration> {
+        return this.initializeAccount()
+                .thenp { this.registerAccount(regToken = it, email = email, password = password) }
     }
 
-    override fun initializeAccount(): Promise<RegistrationToken> {
+    //
+    // Private Methods
+    //
+
+    fun initializeAccount(): Promise<RegistrationToken> {
         val body = Gigya.Accounts.InitRegistrationRequest(
                 apiKey = this.gigya.apiKey
                 , userKey = this.gigya.userKey
@@ -127,7 +125,7 @@ class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config)
                     .then { it.regToken }
     }
 
-    override fun registerAccount(regToken: RegistrationToken, email: String, password: String): Promise<Registration> {
+    fun registerAccount(regToken: RegistrationToken, email: String, password: String): Promise<Registration> {
         val body = Gigya.Accounts.RegisterRequest(
                 apiKey = this.gigya.apiKey
                 , userKey = this.gigya.userKey
@@ -170,10 +168,6 @@ class GigyaSSOService(private val gigya: GigyaConfig): HTTPService(gigya.config)
                     }
                     .then { Registration(token = it.regToken, uid = it.UID, email = email, password = password) }
     }
-
-    //
-    // Private Methods
-    //
 
     private fun <T, B:Any> HTTPService.send(route: String, body: HTTPService.UploadBody<B>, type: Class<T>): Promise<T>
         = this.post(route = route, body = body, type = type)
