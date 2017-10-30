@@ -12,7 +12,7 @@ import com.inmotionsoftware.promise.Promise
 // Created by jcarbo on 9/29/17.
 //
 
-class DinnerTonightStoreService(config: HTTPService.Config) : HTTPService(config = config), StoreService {
+internal class DinnerTonightStoreService(config: HTTPService.Config) : HTTPService(config = config), StoreService {
 
     override fun getStore(storeId: String): Promise<Store> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

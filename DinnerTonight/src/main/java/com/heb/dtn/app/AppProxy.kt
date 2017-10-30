@@ -1,11 +1,10 @@
 package com.heb.dtn.app
 
-import android.support.multidex.BuildConfig
 import android.support.multidex.MultiDexApplication
 import com.heb.dtn.account.AccountManager
 import com.heb.dtn.foundation.promise.android.always
 import com.heb.dtn.locator.domain.StoreItem
-import com.heb.dtn.service.domain.account.OAuthToken
+import com.heb.dtn.service.domain.account.AuthSession
 import com.heb.dtn.service.domain.store.Store
 import com.heb.dtn.service.manager.DefaultDinnerTonightServiceManager
 import com.heb.dtn.service.manager.DinnerTonightServiceEnvironment
@@ -39,7 +38,7 @@ open class AppProxy : MultiDexApplication(), AccountManager.Delegate {
 
         val context = applicationContext
 //        this.environment = if (BuildConfig.DEBUG) DinnerTonightServiceEnvironment.Staging else DinnerTonightServiceEnvironment.Release
-        this.environment = DinnerTonightServiceEnvironment.Dev
+        this.environment = DinnerTonightServiceEnvironment.Staging
 
         this.defaultCenterMapStore = Store.defaultStore
 
@@ -69,12 +68,12 @@ open class AppProxy : MultiDexApplication(), AccountManager.Delegate {
     // MARK: AccountManager.Delegate
     //
 
-    override fun didAuthenticate(token: OAuthToken) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun didAuthenticate(authSession: AuthSession) {
+        this.serviceManager.setAuthSession(authSession = authSession)
     }
 
     override fun didUnauthenticate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.serviceManager.setAuthSession(authSession = null)
     }
 
 }

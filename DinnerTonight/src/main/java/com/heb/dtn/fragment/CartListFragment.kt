@@ -14,6 +14,7 @@ import com.heb.dtn.foundation.promise.android.catch
 import com.heb.dtn.foundation.promise.android.then
 import com.heb.dtn.service.domain.cart.Cart
 import com.heb.dtn.service.domain.cart.CartProduct
+import com.heb.dtn.service.domain.order.Order
 import com.heb.dtn.widget.CartProductView
 import kotlinx.android.synthetic.main.cart_list_fragment.*
 
@@ -40,7 +41,7 @@ class CartListFragment: Fragment, CartProductView.Listener {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         checkout.setOnClickListener {
-            AppProxy.proxy.serviceManager().orderService().createOrder(cart)
+            AppProxy.proxy.serviceManager().orderService().submitOrder(order = Order(cartId = cart.cartId, customerId = ""))
                     .then {
                         if (it.success) {
                             Toast.makeText(context, "order placed", Toast.LENGTH_SHORT).show()

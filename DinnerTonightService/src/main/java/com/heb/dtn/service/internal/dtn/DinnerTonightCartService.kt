@@ -14,7 +14,7 @@ import com.inmotionsoftware.promise.Promise
 // Created by Khuong Huynh on 10/4/17.
 //
 
-class DinnerTonightCartService(config: HTTPService.Config) : HTTPService(config = config), CartService {
+internal class DinnerTonightCartService(config: HTTPService.Config) : HTTPService(config = config), CartService {
 
     override fun createCart(): Promise<Cart>
         = this.post(route = "api/v1/cart/new", body = UploadBody.Empty(), type = Cart::class.java)

@@ -50,7 +50,7 @@ enum class DinnerTonightServiceEnvironment {
         }
 }
 
-interface DinnerTonightServiceManager : DinnerTonightOAuthServiceManager {
+interface DinnerTonightServiceManager : DinnerTonightAuthServiceManager {
 
     fun serverInfoService(): ServerInfoService
 
