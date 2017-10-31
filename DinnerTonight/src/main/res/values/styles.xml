@@ -68,6 +68,11 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="LoginCreateAccountDialogLayoutStyle.Success">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
     <style name="CreateAccountNextButton">
         <item name="android:layout_height">60dp</item>
         <item name="android:layout_width">200dp</item>
@@ -85,6 +90,25 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/login_edit_text_size</item>
+    </style>
+
+    <style name="BaseLoginCreateAccountTextView">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="LoginCreateAccountTextView" parent="BaseLoginCreateAccountTextView">
+        <item name="android:layout_marginStart">@dimen/custom_dialog_side_padding</item>
+        <item name="android:layout_marginEnd">@dimen/custom_dialog_side_padding</item>
+    </style>
+
+    <style name="EmailTextViewStyle" parent="BaseLoginCreateAccountTextView">
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="EmailEditTextStyle" parent="LoginCreateAccountEditTextStyle">
