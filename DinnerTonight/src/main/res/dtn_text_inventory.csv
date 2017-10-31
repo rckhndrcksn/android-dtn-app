@@ -40,4 +40,3 @@ LineNum,Flow,Screen Name,Dev Key,Placeholder String,Final UX Text,Android Overri
 255,Refill Contact Doctor,Contact my doctor?,ACTION_YES,btn_yes,btn_yes,Yes,Yes,,,,,,,
 1102,Store Locator,Store Locator,LOCATION_SERVICES_APP_SETTINGS_BUTTON,LOCATION_SERVICES_APP_SETTINGS_BUTTON,,App settings,App settings,Settings,When user turns off location services AND selects never show again. Text is what Google presents its users under similr circumstance.,,,,,
 1101,Store Locator,Store Locator,LOCATION_SERVICES_DISABLED,LOCATION_SERVICES_DISABLED,,Location Permissions have been disabled.,Location Permissions have been disabled.,App permission denied.,When user turns off location services AND selects never show again. Text is what Google presents its users under similr circumstance.,,,,,
-158,Change Store Details,My Store,BUTTON_CANCEL,btn_cancel,btn_cancel,Cancel,Cancel,,,,,,,
